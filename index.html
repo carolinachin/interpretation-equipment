@@ -3,23 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>통역기기 관리 시스템</title>
+    <title>통역기기 관리</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1600px; margin: 0 auto; }
         .header {
             background: white;
             border-radius: 16px;
@@ -35,14 +28,8 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        .header h1 {
-            color: #667eea;
-            font-size: 2rem;
-        }
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        .header h1 { color: #667eea; font-size: 2rem; }
+        .header-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
         .sync-btn {
             background: #10b981;
             color: white;
@@ -53,95 +40,42 @@
             cursor: pointer;
             font-size: 14px;
         }
-        .sync-btn:hover {
-            background: #059669;
-        }
-        .sync-btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-        .inventory-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+        .sync-btn:hover { background: #059669; }
+        .sync-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+        .inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .inventory-card {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             border-radius: 12px;
             padding: 20px;
             border: 2px solid #0ea5e9;
         }
-        .inventory-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #0c4a6e;
-            margin-bottom: 15px;
-        }
+        .inventory-title { font-size: 16px; font-weight: 700; color: #0c4a6e; margin-bottom: 15px; }
         .device-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             background: white;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 8px;
         }
-        .device-name {
-            font-weight: 600;
-            color: #374151;
-        }
-        .device-count {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0ea5e9;
-        }
-        .device-count.low {
-            color: #ef4444;
-        }
-        .edit-inventory-btn {
-            background: #f59e0b;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-        }
-        .edit-inventory-btn:hover {
-            background: #d97706;
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+        .device-count { font-size: 20px; font-weight: 700; color: #0ea5e9; }
+        .device-count.low { color: #ef4444; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .tab-btn {
             flex: 1;
-            min-width: 120px;
-            padding: 15px;
+            min-width: 100px;
+            padding: 12px;
             border: none;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s;
             background: rgba(255,255,255,0.3);
             color: white;
+            font-size: 14px;
         }
-        .tab-btn.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .content {
-            display: none;
-        }
-        .content.active {
-            display: block;
-        }
+        .tab-btn.active { background: white; color: #667eea; }
+        .content { display: none; }
+        .content.active { display: block; }
         .card {
             background: white;
             border-radius: 16px;
@@ -149,66 +83,26 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .card h2 {
-            color: #1f2937;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .card h2 { color: #1f2937; font-size: 1.5rem; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #374151; }
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid #e5e7eb;
             border-radius: 10px;
             font-size: 16px;
-            transition: all 0.3s;
         }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .time-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
-        .device-selector {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .time-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .device-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .device-input-group {
             background: #f9fafb;
             padding: 15px;
             border-radius: 10px;
             border: 2px solid #e5e7eb;
         }
-        .device-input-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
+        .device-input-group label { display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
         .device-input-group input {
             width: 100%;
             padding: 8px;
@@ -227,16 +121,7 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
             width: 100%;
-        }
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-        .submit-btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
         }
         .alert-box {
             background: #fef3c7;
@@ -256,30 +141,102 @@
             font-size: 14px;
             color: #1e40af;
         }
-        .event-card {
-            background: #f0f9ff;
-            border: 2px solid #0ea5e9;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
+        .week-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .week-nav button, .month-nav button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: white;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
         }
-        .event-card:hover {
-            border-color: #0284c7;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        .week-nav button:hover { background: #5568d3; }
+        .weekly-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 1px;
+            background: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
         }
-        .event-title {
-            font-weight: 700;
-            font-size: 16px;
-            color: #0c4a6e;
-            margin-bottom: 10px;
-        }
-        .event-info {
-            font-size: 13px;
+        .time-label {
+            background: #f9fafb;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
             color: #6b7280;
-            line-height: 1.6;
+            border-right: 2px solid #e5e7eb;
         }
+        .day-header {
+            background: #f3f4f6;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: #374151;
+        }
+        .day-header.today { background: #dbeafe; color: #1e40af; }
+        .time-slot {
+            background: white;
+            padding: 8px;
+            min-height: 70px;
+            font-size: 11px;
+            position: relative;
+        }
+        .time-slot.available { background: #f0fdf4; }
+        .time-slot.low { background: #fef3c7; }
+        .time-slot.critical { background: #fee2e2; }
+        .slot-stock { font-weight: 600; margin-bottom: 2px; }
+        .event-in-slot {
+            background: #e0e7ff;
+            border-left: 3px solid #6366f1;
+            padding: 4px;
+            margin-top: 4px;
+            font-size: 10px;
+            border-radius: 3px;
+            color: #3730a3;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .event-in-slot:hover { background: #c7d2fe; }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day {
+            min-height: 100px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 8px;
+            background: white;
+        }
+        .calendar-day.empty { border: none; background: transparent; }
+        .calendar-header-day {
+            background: #f3f4f6;
+            padding: 10px;
+            text-align: center;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+        .day-number { font-weight: 700; font-size: 16px; margin-bottom: 5px; }
+        .day-stock {
+            font-size: 11px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        .day-stock.new { background: #dbeafe; color: #1e40af; }
+        .day-stock.old { background: #fef3c7; color: #92400e; }
+        .day-stock.low { background: #fecaca; color: #991b1b; }
         .rental-item {
             background: #f9fafb;
             border-radius: 12px;
@@ -295,30 +252,18 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        .rental-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: #1f2937;
-        }
-        .rental-badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .rental-badge {
+        .rental-title { font-weight: 700; font-size: 18px; color: #1f2937; }
+        .rental-actions { display: flex; gap: 8px; }
+        .btn-small {
             padding: 6px 12px;
-            border-radius: 20px;
+            border: none;
+            border-radius: 6px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
+            cursor: pointer;
         }
-        .rental-badge.using {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .rental-badge.returned {
-            background: #d1fae5;
-            color: #065f46;
-        }
+        .btn-delete { background: #ef4444; color: white; }
+        .btn-delete:hover { background: #dc2626; }
         .device-list {
             background: white;
             padding: 12px;
@@ -326,18 +271,11 @@
             margin-top: 10px;
             font-size: 13px;
         }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #6b7280;
-        }
+        .loading { text-align: center; padding: 40px; color: #6b7280; }
         @media (max-width: 768px) {
-            .form-row, .device-selector, .inventory-grid, .time-selector {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1.5rem;
-            }
+            .form-row, .device-selector, .inventory-grid, .time-selector { grid-template-columns: 1fr; }
+            .weekly-grid { grid-template-columns: 60px repeat(7, 1fr); font-size: 10px; }
+            .header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -347,12 +285,8 @@
             <div class="header-content">
                 <h1>🎙️ 통역기기 관리</h1>
                 <div class="header-buttons">
-                    <button class="sync-btn" onclick="manualRefresh()" id="refreshBtn">
-                        🔄 새로고침
-                    </button>
-                    <button class="sync-btn" onclick="syncTeamUp()" id="syncBtn">
-                        📅 TeamUp 동기화
-                    </button>
+                    <button class="sync-btn" onclick="manualRefresh()" id="refreshBtn">🔄 새로고침</button>
+                    <button class="sync-btn" onclick="syncTeamUp()" id="syncBtn">📅 TeamUp 동기화</button>
                 </div>
             </div>
             
@@ -360,59 +294,88 @@
                 <div class="inventory-card">
                     <div class="inventory-title">🆕 신형 모델 재고</div>
                     <div class="device-row">
-                        <span class="device-name">송신기</span>
-                        <span class="device-count" id="newTransmitterStock">-</span>
+                        <span>송신기</span>
+                        <span class="device-count" id="newTxStock">-</span>
                     </div>
                     <div class="device-row">
-                        <span class="device-name">수신기</span>
-                        <span class="device-count" id="newReceiverStock">-</span>
+                        <span>수신기</span>
+                        <span class="device-count" id="newRxStock">-</span>
                     </div>
-                    <button class="edit-inventory-btn" onclick="alert('재고 수정 기능 (추후 추가)')">재고 수정</button>
                 </div>
                 
                 <div class="inventory-card">
                     <div class="inventory-title">📻 구형 모델 재고</div>
                     <div class="device-row">
-                        <span class="device-name">송신기</span>
-                        <span class="device-count" id="oldTransmitterStock">-</span>
+                        <span>송신기</span>
+                        <span class="device-count" id="oldTxStock">-</span>
                     </div>
                     <div class="device-row">
-                        <span class="device-name">수신기</span>
-                        <span class="device-count" id="oldReceiverStock">-</span>
+                        <span>수신기</span>
+                        <span class="device-count" id="oldRxStock">-</span>
                     </div>
-                    <button class="edit-inventory-btn" onclick="alert('재고 수정 기능 (추후 추가)')">재고 수정</button>
                 </div>
             </div>
         </div>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('teamup')">TeamUp</button>
+            <button class="tab-btn active" onclick="showTab('teamup')">TeamUp 주간</button>
+            <button class="tab-btn" onclick="showTab('weekly')">재고 주간뷰</button>
+            <button class="tab-btn" onclick="showTab('monthly')">재고 월간뷰</button>
             <button class="tab-btn" onclick="showTab('rental')">수동신청</button>
             <button class="tab-btn" onclick="showTab('list')">목록</button>
         </div>
 
         <div id="teamup" class="content active">
-            <div class="card">
-                <h2>📅 TeamUp 일정</h2>
-                <div class="info-box">
-                    💡 TeamUp 캘린더와 연동된 일정 목록입니다. "TeamUp 동기화" 버튼을 눌러 최신 일정을 가져오세요.
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="padding: 20px; border-bottom: 2px solid #e5e7eb;">
+                    <div class="week-nav">
+                        <button onclick="changeTeamUpWeek(-1)">◀ 이전 주</button>
+                        <h2 id="teamupWeekTitle" style="margin: 0;">TeamUp 주간 일정</h2>
+                        <button onclick="changeTeamUpWeek(1)">다음 주 ▶</button>
+                    </div>
                 </div>
-                <div id="teamupEventsList"></div>
+                <div style="overflow-x: auto;">
+                    <div class="weekly-grid" id="teamupWeeklyGrid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="weekly" class="content">
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="padding: 20px; border-bottom: 2px solid #e5e7eb;">
+                    <div class="week-nav">
+                        <button onclick="changeStockWeek(-1)">◀ 이전 주</button>
+                        <h2 id="stockWeekTitle" style="margin: 0;">주간 재고 현황</h2>
+                        <button onclick="changeStockWeek(1)">다음 주 ▶</button>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <div class="weekly-grid" id="stockWeeklyGrid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="monthly" class="content">
+            <div class="card">
+                <div class="week-nav">
+                    <button onclick="changeMonth(-1)">◀ 이전 달</button>
+                    <h2 id="monthTitle" style="margin: 0;">월간 재고 현황</h2>
+                    <button onclick="changeMonth(1)">다음 달 ▶</button>
+                </div>
+                <div class="calendar" id="calendarGrid"></div>
             </div>
         </div>
 
         <div id="rental" class="content">
             <div class="card">
                 <h2>직접 반출 신청</h2>
-                <div class="alert-box">
-                    💡 TeamUp에 없는 일정이거나 긴급한 경우 여기서 직접 신청하세요.
-                </div>
+                <div class="alert-box">💡 TeamUp에 없는 일정이거나 긴급한 경우 직접 신청하세요.</div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>사용자 이름 *</label>
+                        <label>사용자 *</label>
                         <select id="userName">
-                            <option value="">선택하세요</option>
+                            <option value="">선택</option>
                             <option value="규연">규연</option>
                             <option value="다현">다현</option>
                             <option value="소담">소담</option>
@@ -430,9 +393,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>반출 유형 *</label>
+                        <label>유형 *</label>
                         <select id="rentalType">
-                            <option value="현장통역">현장통역 (오피스 내)</option>
+                            <option value="현장통역">현장통역</option>
                             <option value="외근">외근</option>
                             <option value="국내 출장">국내 출장</option>
                             <option value="해외 출장">해외 출장</option>
@@ -455,10 +418,7 @@
                     <div class="form-group">
                         <label>시작 시간 *</label>
                         <div class="time-selector">
-                            <select id="startAmPm">
-                                <option value="AM">오전</option>
-                                <option value="PM">오후</option>
-                            </select>
+                            <select id="startAmPm"><option value="AM">오전</option><option value="PM">오후</option></select>
                             <select id="startHour">
                                 <option value="9" selected>9</option>
                                 <option value="10">10</option>
@@ -471,59 +431,50 @@
                                 <option value="5">5</option>
                                 <option value="6">6</option>
                             </select>
-                            <select id="startMinute">
-                                <option value="00" selected>00분</option>
-                                <option value="30">30분</option>
-                            </select>
+                            <select id="startMinute"><option value="00">00</option><option value="30">30</option></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>종료 시간 *</label>
                         <div class="time-selector">
-                            <select id="endAmPm">
-                                <option value="AM">오전</option>
-                                <option value="PM" selected>오후</option>
-                            </select>
+                            <select id="endAmPm"><option value="AM">오전</option><option value="PM" selected>오후</option></select>
                             <select id="endHour">
                                 <option value="6" selected>6</option>
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                                 <option value="9">9</option>
                             </select>
-                            <select id="endMinute">
-                                <option value="00" selected>00분</option>
-                                <option value="30">30분</option>
-                            </select>
+                            <select id="endMinute"><option value="00">00</option><option value="30">30</option></select>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>사용 사유 *</label>
+                    <label>사유 *</label>
                     <textarea id="reason" rows="2" placeholder="워크샵, 출장 등"></textarea>
                 </div>
 
-                <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기 선택</h3>
+                <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기</h3>
                 <div class="device-selector">
                     <div class="device-input-group">
                         <label>🆕 신형 송신기</label>
-                        <input type="number" id="newTransmitter" min="0" value="0">
+                        <input type="number" id="newTx" min="0" value="0">
                     </div>
                     <div class="device-input-group">
                         <label>🆕 신형 수신기</label>
-                        <input type="number" id="newReceiver" min="0" value="0">
+                        <input type="number" id="newRx" min="0" value="0">
                     </div>
                     <div class="device-input-group">
                         <label>📻 구형 송신기</label>
-                        <input type="number" id="oldTransmitter" min="0" value="0">
+                        <input type="number" id="oldTx" min="0" value="0">
                     </div>
                     <div class="device-input-group">
                         <label>📻 구형 수신기</label>
-                        <input type="number" id="oldReceiver" min="0" value="0">
+                        <input type="number" id="oldRx" min="0" value="0">
                     </div>
                 </div>
 
-                <button class="submit-btn" onclick="submitRental()" id="submitBtn">반출 신청하기</button>
+                <button class="submit-btn" onclick="submitRental()">신청하기</button>
             </div>
         </div>
 
@@ -538,114 +489,70 @@
     <script>
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbygxNiQ5NOpl83EP0xrE8Wz2RFQPfYZns-KE3xUolt5ZpBflSrtYWJJcU2Ii54CH1mCRQ/exec';
         
-        let inventory = {
-            new_model: { transmitter: 4, receiver: 28 },
-            old_model: { transmitter: 5, receiver: 31 }
-        };
+        let inv = { new_model: { transmitter: 4, receiver: 28 }, old_model: { transmitter: 5, receiver: 31 } };
         let rentals = [];
-        let teamupEvents = [];
+        let events = [];
+        let teamupWeek = new Date();
+        let stockWeek = new Date();
+        let currentMonth = new Date();
 
         async function init() {
             try {
-                const testResponse = await fetch(WEB_APP_URL + '?action=getInventory', {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                
-                if (!testResponse.ok) throw new Error('서버 응답 오류');
-                
+                const test = await fetch(WEB_APP_URL + '?action=getInventory', { method: 'GET', redirect: 'follow' });
+                if (!test.ok) throw new Error('서버 오류');
                 await loadInventory();
                 await loadRentals();
                 await loadTeamUpEvents();
-                updateAllDisplays();
+                updateAll();
                 console.log('✅ 서버 연결 성공');
             } catch (error) {
-                console.warn('⚠️ 서버 연결 실패, 더미 데이터 사용');
-                initDummyData();
+                console.warn('⚠️ 더미 데이터 모드');
+                initDummy();
             }
         }
 
-        function initDummyData() {
-            teamupEvents = [
-                {
-                    eventId: '1',
-                    title: 'KBR 워크샵',
-                    startDate: '2026-01-20T09:00:00',
-                    endDate: '2026-01-20T17:00:00',
-                    interpretType: '현장통역',
-                    assignee: '다현'
-                },
-                {
-                    eventId: '2',
-                    title: 'G-Star 출장',
-                    startDate: '2026-01-22T08:00:00',
-                    endDate: '2026-01-24T18:00:00',
-                    interpretType: '해외 출장',
-                    assignee: '승연'
-                },
-                {
-                    eventId: '3',
-                    title: '델라웨어 대표님 미팅',
-                    startDate: '2026-01-23T14:00:00',
-                    endDate: '2026-01-23T16:00:00',
-                    interpretType: '현장통역',
-                    assignee: '소담'
-                }
+        function initDummy() {
+            events = [
+                { eventId: '1', title: 'KBR 워크샵', startDate: '2026-01-20T09:00:00', endDate: '2026-01-20T17:00:00', interpretType: '현장통역', assignee: '다현' },
+                { eventId: '2', title: 'G-Star', startDate: '2026-01-22T10:00:00', endDate: '2026-01-22T12:00:00', interpretType: '해외 출장', assignee: '승연' },
+                { eventId: '3', title: '델라웨어 미팅', startDate: '2026-01-23T14:00:00', endDate: '2026-01-23T16:00:00', interpretType: '현장통역', assignee: '소담' }
             ];
-            updateAllDisplays();
+            updateAll();
         }
 
         async function loadInventory() {
             try {
-                const response = await fetch(WEB_APP_URL + '?action=getInventory', {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                const data = await response.json();
-                if (data.success) inventory = data.inventory;
-                updateInventoryDisplay();
-            } catch (error) {
-                console.error('재고 로드 오류:', error);
-            }
+                const r = await fetch(WEB_APP_URL + '?action=getInventory', { method: 'GET', redirect: 'follow' });
+                const d = await r.json();
+                if (d.success) inv = d.inventory;
+                updateInvDisplay();
+            } catch (e) { console.error('재고 오류:', e); }
         }
 
         async function loadRentals() {
             try {
-                const response = await fetch(WEB_APP_URL + '?action=getRentals', {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                const data = await response.json();
-                if (data.success) rentals = data.rentals;
-            } catch (error) {
-                console.error('반출 기록 로드 오류:', error);
-            }
+                const r = await fetch(WEB_APP_URL + '?action=getRentals', { method: 'GET', redirect: 'follow' });
+                const d = await r.json();
+                if (d.success) rentals = d.rentals;
+            } catch (e) { console.error('반출 오류:', e); }
         }
 
         async function loadTeamUpEvents() {
             try {
-                const response = await fetch(WEB_APP_URL + '?action=getTeamUpEvents', {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                const data = await response.json();
-                if (data.success) teamupEvents = data.events;
-                updateTeamUpDisplay();
-            } catch (error) {
-                console.error('TeamUp 이벤트 로드 오류:', error);
-            }
+                const r = await fetch(WEB_APP_URL + '?action=getTeamUpEvents', { method: 'GET', redirect: 'follow' });
+                const d = await r.json();
+                if (d.success) events = d.events;
+            } catch (e) { console.error('TeamUp 오류:', e); }
         }
 
         async function manualRefresh() {
             const btn = document.getElementById('refreshBtn');
             btn.textContent = '⏳ 로딩...';
             btn.disabled = true;
-            
             await loadInventory();
             await loadRentals();
             await loadTeamUpEvents();
-            updateAllDisplays();
-            
+            updateAll();
             btn.textContent = '🔄 새로고침';
             btn.disabled = false;
         }
@@ -654,170 +561,379 @@
             const btn = document.getElementById('syncBtn');
             btn.textContent = '⏳ 동기화...';
             btn.disabled = true;
-            
             try {
-                const response = await fetch(WEB_APP_URL + '?action=syncTeamUp', {
-                    method: 'GET',
-                    redirect: 'follow'
-                });
-                const data = await response.json();
-                if (data.success) {
-                    alert(`✅ 동기화 완료!\n\n전체 이벤트: ${data.total}개\n저장된 이벤트: ${data.count}개`);
+                const r = await fetch(WEB_APP_URL + '?action=syncTeamUp', { method: 'GET', redirect: 'follow' });
+                const d = await r.json();
+                if (d.success) {
+                    alert(`✅ 완료!\n전체: ${d.total}개\n저장: ${d.count}개`);
                     await loadTeamUpEvents();
+                    updateAll();
                 } else {
-                    alert('❌ 동기화 실패: ' + data.error);
+                    alert('❌ 실패: ' + d.error);
                 }
-            } catch (error) {
-                alert('❌ 동기화 오류: ' + error);
-            }
-            
+            } catch (e) { alert('❌ 오류: ' + e); }
             btn.textContent = '📅 TeamUp 동기화';
             btn.disabled = false;
         }
 
-        function updateInventoryDisplay() {
-            document.getElementById('newTransmitterStock').textContent = inventory.new_model.transmitter;
-            document.getElementById('newReceiverStock').textContent = inventory.new_model.receiver;
-            document.getElementById('oldTransmitterStock').textContent = inventory.old_model.transmitter;
-            document.getElementById('oldReceiverStock').textContent = inventory.old_model.receiver;
+        function updateInvDisplay() {
+            document.getElementById('newTxStock').textContent = inv.new_model.transmitter;
+            document.getElementById('newRxStock').textContent = inv.new_model.receiver;
+            document.getElementById('oldTxStock').textContent = inv.old_model.transmitter;
+            document.getElementById('oldRxStock').textContent = inv.old_model.receiver;
         }
 
-        function showTab(tabName) {
+        function showTab(tab) {
             document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
+            document.getElementById(tab).classList.add('active');
             event.target.classList.add('active');
             
-            if (tabName === 'list') updateRentalList();
+            if (tab === 'teamup') updateTeamUpWeekly();
+            else if (tab === 'weekly') updateStockWeekly();
+            else if (tab === 'monthly') updateMonthly();
+            else if (tab === 'list') updateList();
         }
 
-        function getDateTime(date, ampm, hour, minute) {
+        function changeTeamUpWeek(d) {
+            if (d === 0) teamupWeek = new Date();
+            else teamupWeek.setDate(teamupWeek.getDate() + (d * 7));
+            updateTeamUpWeekly();
+        }
+
+        function changeStockWeek(d) {
+            if (d === 0) stockWeek = new Date();
+            else stockWeek.setDate(stockWeek.getDate() + (d * 7));
+            updateStockWeekly();
+        }
+
+        function changeMonth(d) {
+            currentMonth.setMonth(currentMonth.getMonth() + d);
+            updateMonthly();
+        }
+
+        function updateTeamUpWeekly() {
+            const grid = document.getElementById('teamupWeeklyGrid');
+            grid.innerHTML = '';
+            
+            const ws = new Date(teamupWeek);
+            ws.setDate(teamupWeek.getDate() - teamupWeek.getDay() + 1);
+            const we = new Date(ws);
+            we.setDate(ws.getDate() + 6);
+            
+            document.getElementById('teamupWeekTitle').textContent = 
+                `${ws.getMonth()+1}/${ws.getDate()} ~ ${we.getMonth()+1}/${we.getDate()}`;
+            
+            const corner = document.createElement('div');
+            corner.className = 'time-label';
+            corner.textContent = '시간';
+            grid.appendChild(corner);
+            
+            const days = ['월', '화', '수', '목', '금', '토', '일'];
+            const today = new Date().toDateString();
+            
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(ws);
+                d.setDate(ws.getDate() + i);
+                const h = document.createElement('div');
+                h.className = 'day-header';
+                if (d.toDateString() === today) h.classList.add('today');
+                h.innerHTML = `${days[i]}<br>${d.getMonth()+1}/${d.getDate()}`;
+                grid.appendChild(h);
+            }
+            
+            for (let hour = 9; hour <= 18; hour++) {
+                const tl = document.createElement('div');
+                tl.className = 'time-label';
+                tl.textContent = hour + ':00';
+                grid.appendChild(tl);
+                
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date(ws);
+                    d.setDate(ws.getDate() + i);
+                    d.setHours(hour, 0, 0, 0);
+                    
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    
+                    const eventsInSlot = events.filter(evt => {
+                        const start = new Date(evt.startDate);
+                        const end = new Date(evt.endDate);
+                        return d >= start && d <= end;
+                    });
+                    
+                    if (eventsInSlot.length > 0) {
+                        slot.style.background = '#fef3c7';
+                        eventsInSlot.forEach(evt => {
+                            const div = document.createElement('div');
+                            div.className = 'event-in-slot';
+                            div.textContent = evt.title.length > 15 ? evt.title.substring(0, 15) + '...' : evt.title;
+                            div.title = evt.title + '\n' + evt.interpretType + '\n' + (evt.assignee || '');
+                            slot.appendChild(div);
+                        });
+                    }
+                    
+                    grid.appendChild(slot);
+                }
+            }
+        }
+
+        function updateStockWeekly() {
+            const grid = document.getElementById('stockWeeklyGrid');
+            grid.innerHTML = '';
+            
+            const ws = new Date(stockWeek);
+            ws.setDate(stockWeek.getDate() - stockWeek.getDay() + 1);
+            const we = new Date(ws);
+            we.setDate(ws.getDate() + 6);
+            
+            document.getElementById('stockWeekTitle').textContent = 
+                `${ws.getMonth()+1}/${ws.getDate()} ~ ${we.getMonth()+1}/${we.getDate()}`;
+            
+            const corner = document.createElement('div');
+            corner.className = 'time-label';
+            corner.textContent = '시간';
+            grid.appendChild(corner);
+            
+            const days = ['월', '화', '수', '목', '금', '토', '일'];
+            const today = new Date().toDateString();
+            
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(ws);
+                d.setDate(ws.getDate() + i);
+                const h = document.createElement('div');
+                h.className = 'day-header';
+                if (d.toDateString() === today) h.classList.add('today');
+                h.innerHTML = `${days[i]}<br>${d.getMonth()+1}/${d.getDate()}`;
+                grid.appendChild(h);
+            }
+            
+            for (let hour = 9; hour <= 18; hour++) {
+                const tl = document.createElement('div');
+                tl.className = 'time-label';
+                tl.textContent = hour + ':00';
+                grid.appendChild(tl);
+                
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date(ws);
+                    d.setDate(ws.getDate() + i);
+                    d.setHours(hour, 0, 0, 0);
+                    
+                    const slot = document.createElement('div');
+                    slot.className = 'time-slot';
+                    
+                    const used = calcUsedAtTime(d);
+                    const av = {
+                        newTx: inv.new_model.transmitter - used.newTx,
+                        newRx: inv.new_model.receiver - used.newRx,
+                        oldTx: inv.old_model.transmitter - used.oldTx,
+                        oldRx: inv.old_model.receiver - used.oldRx
+                    };
+                    
+                    if (av.newTx <= 1 || av.newRx <= 5 || av.oldTx <= 1 || av.oldRx <= 5) {
+                        slot.classList.add('critical');
+                    } else if (av.newTx <= 2 || av.newRx <= 10 || av.oldTx <= 2 || av.oldRx <= 10) {
+                        slot.classList.add('low');
+                    } else {
+                        slot.classList.add('available');
+                    }
+                    
+                    slot.innerHTML = `
+                        <div class="slot-stock">🆕 송${av.newTx} 수${av.newRx}</div>
+                        <div class="slot-stock">📻 송${av.oldTx} 수${av.oldRx}</div>
+                    `;
+                    
+                    grid.appendChild(slot);
+                }
+            }
+        }
+
+        function calcUsedAtTime(dt) {
+            const used = { newTx: 0, newRx: 0, oldTx: 0, oldRx: 0 };
+            rentals.forEach(r => {
+                if (r.status !== '사용중') return;
+                const s = new Date(r.startDate);
+                const e = new Date(r.endDate);
+                if (dt >= s && dt <= e) {
+                    used.newTx += parseInt(r.newTransmitter) || 0;
+                    used.newRx += parseInt(r.newReceiver) || 0;
+                    used.oldTx += parseInt(r.oldTransmitter) || 0;
+                    used.oldRx += parseInt(r.oldReceiver) || 0;
+                }
+            });
+            return used;
+        }
+
+        function updateMonthly() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+            
+            const y = currentMonth.getFullYear();
+            const m = currentMonth.getMonth();
+            document.getElementById('monthTitle').textContent = `${y}년 ${m+1}월 재고`;
+
+            ['일', '월', '화', '수', '목', '금', '토'].forEach(day => {
+                const h = document.createElement('div');
+                h.className = 'calendar-header-day';
+                h.textContent = day;
+                grid.appendChild(h);
+            });
+
+            const first = new Date(y, m, 1);
+            const days = new Date(y, m + 1, 0).getDate();
+            const start = first.getDay();
+
+            for (let i = 0; i < start; i++) {
+                const e = document.createElement('div');
+                e.className = 'calendar-day empty';
+                grid.appendChild(e);
+            }
+
+            for (let day = 1; day <= days; day++) {
+                const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                const el = document.createElement('div');
+                el.className = 'calendar-day';
+                
+                const used = calcUsedOnDate(ds);
+                const av = {
+                    newTx: inv.new_model.transmitter - used.newTx,
+                    newRx: inv.new_model.receiver - used.newRx,
+                    oldTx: inv.old_model.transmitter - used.oldTx,
+                    oldRx: inv.old_model.receiver - used.oldRx
+                };
+
+                el.innerHTML = `
+                    <div class="day-number">${day}</div>
+                    <div class="day-stock new ${av.newTx <= 1 || av.newRx <= 5 ? 'low' : ''}">
+                        🆕 송${av.newTx} 수${av.newRx}
+                    </div>
+                    <div class="day-stock old ${av.oldTx <= 1 || av.oldRx <= 5 ? 'low' : ''}">
+                        📻 송${av.oldTx} 수${av.oldRx}
+                    </div>
+                `;
+                grid.appendChild(el);
+            }
+        }
+
+        function calcUsedOnDate(ds) {
+            const used = { newTx: 0, newRx: 0, oldTx: 0, oldRx: 0 };
+            rentals.forEach(r => {
+                if (r.status !== '사용중') return;
+                const s = new Date(r.startDate).toISOString().split('T')[0];
+                const e = new Date(r.endDate).toISOString().split('T')[0];
+                if (ds >= s && ds <= e) {
+                    used.newTx += parseInt(r.newTransmitter) || 0;
+                    used.newRx += parseInt(r.newReceiver) || 0;
+                    used.oldTx += parseInt(r.oldTransmitter) || 0;
+                    used.oldRx += parseInt(r.oldReceiver) || 0;
+                }
+            });
+            return used;
+        }
+
+        function getDateTime(date, ampm, hour, min) {
             let h = parseInt(hour);
             if (ampm === 'PM' && h !== 12) h += 12;
             if (ampm === 'AM' && h === 12) h = 0;
             const dt = new Date(date);
-            dt.setHours(h, parseInt(minute), 0, 0);
+            dt.setHours(h, parseInt(min), 0, 0);
             return dt.toISOString();
         }
 
         async function submitRental() {
             const user = document.getElementById('userName').value;
             const type = document.getElementById('rentalType').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const startAmPm = document.getElementById('startAmPm').value;
-            const startHour = document.getElementById('startHour').value;
-            const startMinute = document.getElementById('startMinute').value;
-            const endAmPm = document.getElementById('endAmPm').value;
-            const endHour = document.getElementById('endHour').value;
-            const endMinute = document.getElementById('endMinute').value;
+            const sd = document.getElementById('startDate').value;
+            const ed = document.getElementById('endDate').value;
+            const sap = document.getElementById('startAmPm').value;
+            const sh = document.getElementById('startHour').value;
+            const sm = document.getElementById('startMinute').value;
+            const eap = document.getElementById('endAmPm').value;
+            const eh = document.getElementById('endHour').value;
+            const em = document.getElementById('endMinute').value;
             const reason = document.getElementById('reason').value.trim();
             
-            const newTx = parseInt(document.getElementById('newTransmitter').value) || 0;
-            const newRx = parseInt(document.getElementById('newReceiver').value) || 0;
-            const oldTx = parseInt(document.getElementById('oldTransmitter').value) || 0;
-            const oldRx = parseInt(document.getElementById('oldReceiver').value) || 0;
+            const nTx = parseInt(document.getElementById('newTx').value) || 0;
+            const nRx = parseInt(document.getElementById('newRx').value) || 0;
+            const oTx = parseInt(document.getElementById('oldTx').value) || 0;
+            const oRx = parseInt(document.getElementById('oldRx').value) || 0;
 
-            if (!user || !startDate || !endDate || !reason) {
-                alert('❌ 필수 항목을 모두 입력해주세요.');
+            if (!user || !sd || !ed || !reason) {
+                alert('❌ 필수 항목 입력하세요');
+                return;
+            }
+            if (nTx + nRx + oTx + oRx === 0) {
+                alert('❌ 최소 1개 선택하세요');
                 return;
             }
 
-            if (newTx + newRx + oldTx + oldRx === 0) {
-                alert('❌ 최소 1개 이상의 기기를 선택해주세요.');
-                return;
-            }
+            const fsd = getDateTime(sd, sap, sh, sm);
+            const fed = getDateTime(ed, eap, eh, em);
 
-            const fullStartDate = getDateTime(startDate, startAmPm, startHour, startMinute);
-            const fullEndDate = getDateTime(endDate, endAmPm, endHour, endMinute);
-
-            const params = new URLSearchParams({
-                action: 'addRental',
-                user, startDate: fullStartDate, endDate: fullEndDate, reason,
-                newTransmitter: newTx, newReceiver: newRx,
-                oldTransmitter: oldTx, oldReceiver: oldRx, type
+            const p = new URLSearchParams({
+                action: 'addRental', user, startDate: fsd, endDate: fed, reason,
+                newTransmitter: nTx, newReceiver: nRx, oldTransmitter: oTx, oldReceiver: oRx, type
             });
 
-            const btn = document.getElementById('submitBtn');
-            btn.textContent = '신청 중...';
-            btn.disabled = true;
-
             try {
-                await fetch(WEB_APP_URL + '?' + params.toString());
-                alert('✅ 반출 신청이 완료되었습니다!');
-                
+                await fetch(WEB_APP_URL + '?' + p.toString());
+                alert('✅ 신청 완료!');
                 document.getElementById('userName').value = '';
                 document.getElementById('reason').value = '';
-                document.getElementById('newTransmitter').value = '0';
-                document.getElementById('newReceiver').value = '0';
-                document.getElementById('oldTransmitter').value = '0';
-                document.getElementById('oldReceiver').value = '0';
-                
+                document.getElementById('newTx').value = '0';
+                document.getElementById('newRx').value = '0';
+                document.getElementById('oldTx').value = '0';
+                document.getElementById('oldRx').value = '0';
                 await loadRentals();
-                updateAllDisplays();
-            } catch (error) {
-                alert('❌ 신청 오류: ' + error);
-            }
-            
-            btn.textContent = '반출 신청하기';
-            btn.disabled = false;
+                updateAll();
+            } catch (e) { alert('❌ 오류: ' + e); }
         }
 
-        function updateTeamUpDisplay() {
-            const container = document.getElementById('teamupEventsList');
-            
-            if (teamupEvents.length === 0) {
-                container.innerHTML = '<div class="loading">TeamUp 동기화 버튼을 클릭하세요</div>';
-                return;
-            }
-
-            container.innerHTML = teamupEvents.map(event => `
-                <div class="event-card">
-                    <div class="event-title">${event.title}</div>
-                    <div class="event-info">
-                        📅 ${new Date(event.startDate).toLocaleString('ko-KR', {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})} 
-                        ~ ${new Date(event.endDate).toLocaleString('ko-KR', {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'})}<br>
-                        🎤 ${event.interpretType} | 👤 ${event.assignee || '미지정'}
-                    </div>
-                </div>
-            `).join('');
+        async function deleteRental(id) {
+            if (!confirm('삭제하시겠습니까?')) return;
+            const p = new URLSearchParams({ action: 'deleteRental', id });
+            try {
+                await fetch(WEB_APP_URL + '?' + p.toString());
+                alert('✅ 삭제 완료');
+                await loadRentals();
+                updateList();
+            } catch (e) { alert('❌ 오류: ' + e); }
         }
 
-        function updateRentalList() {
+        function updateList() {
             const list = document.getElementById('rentalList');
-            
             if (rentals.length === 0) {
                 list.innerHTML = '<div class="loading">반출 기록이 없습니다</div>';
                 return;
             }
 
-            list.innerHTML = rentals.slice().reverse().map(rental => {
-                const typeClass = (rental.type || '').replace(/ /g, '');
-                return `
+            list.innerHTML = rentals.slice().reverse().map(r => `
                 <div class="rental-item">
                     <div class="rental-header">
-                        <div class="rental-title">${rental.user} - ${rental.reason}</div>
-                        <div class="rental-badges">
-                            <span class="rental-badge ${rental.status === '사용중' ? 'using' : 'returned'}">${rental.status}</span>
+                        <div class="rental-title">${r.user} - ${r.reason}</div>
+                        <div class="rental-actions">
+                            <button class="btn-small btn-delete" onclick="deleteRental(${r.id})">삭제</button>
                         </div>
                     </div>
                     <div style="font-size: 14px; color: #6b7280; margin-bottom: 10px;">
-                        📅 ${new Date(rental.startDate).toLocaleString('ko-KR')} ~ ${new Date(rental.endDate).toLocaleString('ko-KR')}
+                        📅 ${new Date(r.startDate).toLocaleString('ko-KR')} ~ ${new Date(r.endDate).toLocaleString('ko-KR')}
                     </div>
                     <div class="device-list">
-                        ${rental.newTransmitter > 0 ? `🆕 신형 송신기: ${rental.newTransmitter}대` : ''}
-                        ${rental.newReceiver > 0 ? ` / 수신기: ${rental.newReceiver}대` : ''}
-                        ${rental.oldTransmitter > 0 ? `<br>📻 구형 송신기: ${rental.oldTransmitter}대` : ''}
-                        ${rental.oldReceiver > 0 ? ` / 수신기: ${rental.oldReceiver}대` : ''}
+                        ${r.newTransmitter > 0 ? `🆕 신형 송신기: ${r.newTransmitter}대` : ''}
+                        ${r.newReceiver > 0 ? ` / 수신기: ${r.newReceiver}대` : ''}
+                        ${r.oldTransmitter > 0 ? `<br>📻 구형 송신기: ${r.oldTransmitter}대` : ''}
+                        ${r.oldReceiver > 0 ? ` / 수신기: ${r.oldReceiver}대` : ''}
                     </div>
                 </div>
-            `}).join('');
+            `).join('');
         }
 
-        function updateAllDisplays() {
-            updateInventoryDisplay();
-            updateTeamUpDisplay();
-            updateRentalList();
+        function updateAll() {
+            updateInvDisplay();
+            updateTeamUpWeekly();
+            updateStockWeekly();
+            updateMonthly();
+            updateList();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
