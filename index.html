@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>통역기기 관리</title>
+    <title>통역기기 관리 v2</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -194,18 +194,27 @@
         .time-slot.low { background: #fef3c7; }
         .time-slot.critical { background: #fee2e2; }
         .slot-stock { font-weight: 600; margin-bottom: 2px; }
-        .event-in-slot {
-            background: #e0e7ff;
-            border-left: 3px solid #6366f1;
-            padding: 4px;
-            margin-top: 4px;
-            font-size: 10px;
-            border-radius: 3px;
-            color: #3730a3;
-            font-weight: 600;
-            cursor: pointer;
+        .all-day-events {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
         }
-        .event-in-slot:hover { background: #c7d2fe; }
+        .all-day-event {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400e;
+            cursor: pointer;
+            border-left: 3px solid #f59e0b;
+        }
+        .all-day-event:hover {
+            background: #fef3c7;
+        }
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -486,6 +495,39 @@
         </div>
     </div>
 
+    <!-- 기기 배정 모달 -->
+    <div class="modal" id="assignModal">
+        <div class="modal-content">
+            <div class="modal-header" id="assignModalTitle">기기 배정</div>
+            <div id="assignModalInfo" style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;"></div>
+            
+            <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기 선택</h3>
+            <div class="device-selector">
+                <div class="device-input-group">
+                    <label>🆕 신형 송신기</label>
+                    <input type="number" id="modalNewTx" min="0" value="0">
+                </div>
+                <div class="device-input-group">
+                    <label>🆕 신형 수신기</label>
+                    <input type="number" id="modalNewRx" min="0" value="0">
+                </div>
+                <div class="device-input-group">
+                    <label>📻 구형 송신기</label>
+                    <input type="number" id="modalOldTx" min="0" value="0">
+                </div>
+                <div class="device-input-group">
+                    <label>📻 구형 수신기</label>
+                    <input type="number" id="modalOldRx" min="0" value="0">
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeAssignModal()">취소</button>
+                <button class="modal-btn confirm" onclick="saveAssignment()">배정하기</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyVFqge7Z3x3kOZp3wNgqXpO8z5sd20EcTlygJMevX5dgbI6dPCxXaboahysbVV6j607w/exec';
         
@@ -495,6 +537,7 @@
         let teamupWeek = new Date();
         let stockWeek = new Date();
         let currentMonth = new Date();
+        let selectedEvent = null;
 
         async function init() {
             try {
@@ -624,6 +667,41 @@
             document.getElementById('teamupWeekTitle').textContent = 
                 `${ws.getMonth()+1}/${ws.getDate()} ~ ${we.getMonth()+1}/${we.getDate()}`;
             
+            // 이번 주 이벤트 필터링
+            const weekEvents = events.filter(evt => {
+                const s = new Date(evt.startDate);
+                return s >= ws && s <= we;
+            });
+            
+            // All-day 이벤트와 시간 이벤트 분리
+            const allDayEvents = weekEvents.filter(evt => {
+                const s = new Date(evt.startDate);
+                const e = new Date(evt.endDate);
+                const duration = (e - s) / (1000 * 60 * 60);
+                return duration >= 20; // 20시간 이상이면 all-day로 간주
+            });
+            
+            const timedEvents = weekEvents.filter(evt => {
+                const s = new Date(evt.startDate);
+                const e = new Date(evt.endDate);
+                const duration = (e - s) / (1000 * 60 * 60);
+                return duration < 20;
+            });
+            
+            // All-day 이벤트 표시 영역
+            if (allDayEvents.length > 0) {
+                const allDaySection = document.createElement('div');
+                allDaySection.style.gridColumn = '1 / -1';
+                allDaySection.className = 'all-day-events';
+                allDaySection.innerHTML = '<div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: #92400e;">📅 종일/장기 일정</div>' +
+                    allDayEvents.map(evt => 
+                        `<div class="all-day-event" onclick="openAssignModal('${evt.eventId}')">
+                            ${evt.title} | ${evt.interpretType} | ${evt.assignee || '미지정'}
+                        </div>`
+                    ).join('');
+                grid.appendChild(allDaySection);
+            }
+            
             const corner = document.createElement('div');
             corner.className = 'time-label';
             corner.textContent = '시간';
@@ -656,7 +734,7 @@
                     const slot = document.createElement('div');
                     slot.className = 'time-slot';
                     
-                    const eventsInSlot = events.filter(evt => {
+                    const eventsInSlot = timedEvents.filter(evt => {
                         const start = new Date(evt.startDate);
                         const end = new Date(evt.endDate);
                         return d >= start && d <= end;
@@ -669,6 +747,7 @@
                             div.className = 'event-in-slot';
                             div.textContent = evt.title.length > 15 ? evt.title.substring(0, 15) + '...' : evt.title;
                             div.title = evt.title + '\n' + evt.interpretType + '\n' + (evt.assignee || '');
+                            div.onclick = function() { openAssignModal(evt.eventId); };
                             slot.appendChild(div);
                         });
                     }
@@ -926,6 +1005,73 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        function openAssignModal(eventId) {
+            const event = events.find(e => e.eventId === eventId);
+            if (!event) return;
+            
+            selectedEvent = event;
+            
+            document.getElementById('assignModalTitle').textContent = `"${event.title}" 기기 배정`;
+            document.getElementById('assignModalInfo').innerHTML = `
+                <strong>📅 일정:</strong> ${new Date(event.startDate).toLocaleString('ko-KR')} ~ ${new Date(event.endDate).toLocaleString('ko-KR')}<br>
+                <strong>🎤 유형:</strong> ${event.interpretType}<br>
+                <strong>👤 담당:</strong> ${event.assignee || '미지정'}
+            `;
+            
+            document.getElementById('modalNewTx').value = '0';
+            document.getElementById('modalNewRx').value = '0';
+            document.getElementById('modalOldTx').value = '0';
+            document.getElementById('modalOldRx').value = '0';
+            
+            document.getElementById('assignModal').classList.add('active');
+        }
+
+        function closeAssignModal() {
+            document.getElementById('assignModal').classList.remove('active');
+            selectedEvent = null;
+        }
+
+        async function saveAssignment() {
+            if (!selectedEvent) return;
+            
+            const nTx = parseInt(document.getElementById('modalNewTx').value) || 0;
+            const nRx = parseInt(document.getElementById('modalNewRx').value) || 0;
+            const oTx = parseInt(document.getElementById('modalOldTx').value) || 0;
+            const oRx = parseInt(document.getElementById('modalOldRx').value) || 0;
+
+            if (nTx + nRx + oTx + oRx === 0) {
+                alert('❌ 최소 1개 이상 선택하세요');
+                return;
+            }
+
+            if ((nTx > 0 || nRx > 0) && (oTx > 0 || oRx > 0)) {
+                if (!confirm('⚠️ 신형과 구형을 혼합하시겠습니까?')) return;
+            }
+
+            const params = new URLSearchParams({
+                action: 'addRental',
+                user: selectedEvent.assignee || '미지정',
+                startDate: selectedEvent.startDate,
+                endDate: selectedEvent.endDate,
+                reason: selectedEvent.title,
+                newTransmitter: nTx,
+                newReceiver: nRx,
+                oldTransmitter: oTx,
+                oldReceiver: oRx,
+                type: selectedEvent.interpretType
+            });
+
+            try {
+                await fetch(WEB_APP_URL + '?' + params.toString());
+                alert('✅ 기기가 배정되었습니다!');
+                await loadRentals();
+                updateAll();
+                closeAssignModal();
+            } catch (error) {
+                alert('❌ 배정 오류: ' + error);
+            }
         }
 
         function updateAll() {
