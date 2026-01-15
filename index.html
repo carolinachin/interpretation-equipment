@@ -103,14 +103,20 @@
             border: 2px solid #e5e7eb;
         }
         .device-input-group label { display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
-        .device-input-group input {
+        .device-input-group select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: 700;
-            text-align: center;
+            padding: 10px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            background: white;
+            cursor: pointer;
+        }
+        .device-input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         .submit-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -160,10 +166,11 @@
         .weekly-grid {
             display: grid;
             grid-template-columns: 80px repeat(7, 1fr);
-            gap: 1px;
+            gap: 0;
             background: #e5e7eb;
             border-radius: 12px;
             overflow: hidden;
+            position: relative;
         }
         .time-label {
             background: #f9fafb;
@@ -172,7 +179,8 @@
             font-size: 12px;
             font-weight: 600;
             color: #6b7280;
-            border-right: 2px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
         }
         .day-header {
             background: #f3f4f6;
@@ -181,19 +189,56 @@
             font-weight: 700;
             font-size: 13px;
             color: #374151;
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 2px solid #e5e7eb;
         }
         .day-header.today { background: #dbeafe; color: #1e40af; }
         .time-slot {
             background: white;
-            padding: 8px;
+            padding: 4px;
             min-height: 70px;
             font-size: 11px;
             position: relative;
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
         }
         .time-slot.available { background: #f0fdf4; }
         .time-slot.low { background: #fef3c7; }
         .time-slot.critical { background: #fee2e2; }
         .slot-stock { font-weight: 600; margin-bottom: 2px; }
+        .event-block {
+            position: absolute;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border: 2px solid #6366f1;
+            border-radius: 6px;
+            padding: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #3730a3;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .event-block:hover {
+            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.5);
+            transform: scale(1.02);
+            z-index: 20;
+        }
+        .event-block.외근 {
+            background: linear-gradient(135deg, #dbeafe 0%, #bae6fd 100%);
+            border-color: #0ea5e9;
+            color: #0c4a6e;
+        }
+        .event-block.출장 {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            border-color: #ef4444;
+            color: #991b1b;
+        }
         .all-day-events {
             background: #fef3c7;
             border: 2px solid #f59e0b;
@@ -301,7 +346,7 @@
             
             <div class="inventory-grid">
                 <div class="inventory-card">
-                    <div class="inventory-title">🆕 신형 모델 재고</div>
+                    <div class="inventory-title">✨ 신형 모델 재고</div>
                     <div class="device-row">
                         <span>송신기</span>
                         <span class="device-count" id="newTxStock">-</span>
@@ -313,7 +358,7 @@
                 </div>
                 
                 <div class="inventory-card">
-                    <div class="inventory-title">📻 구형 모델 재고</div>
+                    <div class="inventory-title">⚙️ 구형 모델 재고</div>
                     <div class="device-row">
                         <span>송신기</span>
                         <span class="device-count" id="oldTxStock">-</span>
@@ -504,20 +549,50 @@
             <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기 선택</h3>
             <div class="device-selector">
                 <div class="device-input-group">
-                    <label>🆕 신형 송신기</label>
-                    <input type="number" id="modalNewTx" min="0" value="0">
+                    <label>✨ 신형 송신기</label>
+                    <select id="modalNewTx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                    </select>
                 </div>
                 <div class="device-input-group">
-                    <label>🆕 신형 수신기</label>
-                    <input type="number" id="modalNewRx" min="0" value="0">
+                    <label>✨ 신형 수신기</label>
+                    <select id="modalNewRx">
+                        <option value="0">0대</option>
+                        <option value="5">5대</option>
+                        <option value="10">10대</option>
+                        <option value="15">15대</option>
+                        <option value="20">20대</option>
+                        <option value="25">25대</option>
+                        <option value="28">28대</option>
+                    </select>
                 </div>
                 <div class="device-input-group">
-                    <label>📻 구형 송신기</label>
-                    <input type="number" id="modalOldTx" min="0" value="0">
+                    <label>⚙️ 구형 송신기</label>
+                    <select id="modalOldTx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                        <option value="5">5대</option>
+                    </select>
                 </div>
                 <div class="device-input-group">
-                    <label>📻 구형 수신기</label>
-                    <input type="number" id="modalOldRx" min="0" value="0">
+                    <label>⚙️ 구형 수신기</label>
+                    <select id="modalOldRx">
+                        <option value="0">0대</option>
+                        <option value="5">5대</option>
+                        <option value="10">10대</option>
+                        <option value="15">15대</option>
+                        <option value="20">20대</option>
+                        <option value="25">25대</option>
+                        <option value="30">30대</option>
+                        <option value="31">31대</option>
+                    </select>
                 </div>
             </div>
             
@@ -667,28 +742,23 @@
             document.getElementById('teamupWeekTitle').textContent = 
                 `${ws.getMonth()+1}/${ws.getDate()} ~ ${we.getMonth()+1}/${we.getDate()}`;
             
-            // 이번 주 이벤트 필터링
             const weekEvents = events.filter(evt => {
                 const s = new Date(evt.startDate);
                 return s >= ws && s <= we;
             });
             
-            // All-day 이벤트와 시간 이벤트 분리
             const allDayEvents = weekEvents.filter(evt => {
                 const s = new Date(evt.startDate);
                 const e = new Date(evt.endDate);
-                const duration = (e - s) / (1000 * 60 * 60);
-                return duration >= 20; // 20시간 이상이면 all-day로 간주
+                return (e - s) / (1000 * 60 * 60) >= 20;
             });
             
             const timedEvents = weekEvents.filter(evt => {
                 const s = new Date(evt.startDate);
                 const e = new Date(evt.endDate);
-                const duration = (e - s) / (1000 * 60 * 60);
-                return duration < 20;
+                return (e - s) / (1000 * 60 * 60) < 20;
             });
             
-            // All-day 이벤트 표시 영역
             if (allDayEvents.length > 0) {
                 const allDaySection = document.createElement('div');
                 allDaySection.style.gridColumn = '1 / -1';
@@ -710,6 +780,7 @@
             const days = ['월', '화', '수', '목', '금', '토', '일'];
             const today = new Date().toDateString();
             
+            const dayColumns = [];
             for (let i = 0; i < 7; i++) {
                 const d = new Date(ws);
                 d.setDate(ws.getDate() + i);
@@ -717,7 +788,9 @@
                 h.className = 'day-header';
                 if (d.toDateString() === today) h.classList.add('today');
                 h.innerHTML = `${days[i]}<br>${d.getMonth()+1}/${d.getDate()}`;
+                h.style.position = 'relative';
                 grid.appendChild(h);
+                dayColumns.push(h);
             }
             
             for (let hour = 9; hour <= 18; hour++) {
@@ -727,34 +800,44 @@
                 grid.appendChild(tl);
                 
                 for (let i = 0; i < 7; i++) {
-                    const d = new Date(ws);
-                    d.setDate(ws.getDate() + i);
-                    d.setHours(hour, 0, 0, 0);
-                    
                     const slot = document.createElement('div');
                     slot.className = 'time-slot';
-                    
-                    const eventsInSlot = timedEvents.filter(evt => {
-                        const start = new Date(evt.startDate);
-                        const end = new Date(evt.endDate);
-                        return d >= start && d <= end;
-                    });
-                    
-                    if (eventsInSlot.length > 0) {
-                        slot.style.background = '#fef3c7';
-                        eventsInSlot.forEach(evt => {
-                            const div = document.createElement('div');
-                            div.className = 'event-in-slot';
-                            div.textContent = evt.title.length > 15 ? evt.title.substring(0, 15) + '...' : evt.title;
-                            div.title = evt.title + '\n' + evt.interpretType + '\n' + (evt.assignee || '');
-                            div.onclick = function() { openAssignModal(evt.eventId); };
-                            slot.appendChild(div);
-                        });
-                    }
-                    
+                    slot.id = `slot-${i}-${hour}`;
+                    slot.style.position = 'relative';
                     grid.appendChild(slot);
                 }
             }
+            
+            timedEvents.forEach(evt => {
+                const start = new Date(evt.startDate);
+                const end = new Date(evt.endDate);
+                const dayIndex = (start.getDay() + 6) % 7;
+                const startHour = start.getHours();
+                const endHour = end.getHours();
+                const startMin = start.getMinutes();
+                const endMin = end.getMinutes();
+                
+                if (startHour < 9 || startHour > 18) return;
+                
+                const targetSlot = document.getElementById(`slot-${dayIndex}-${startHour}`);
+                if (!targetSlot) return;
+                
+                const duration = (end - start) / (1000 * 60 * 60);
+                const height = Math.max(duration * 70, 40);
+                const topOffset = (startMin / 60) * 70;
+                
+                const block = document.createElement('div');
+                block.className = 'event-block ' + evt.interpretType.replace(/ /g, '');
+                block.style.height = height + 'px';
+                block.style.top = topOffset + 'px';
+                block.style.left = '2px';
+                block.style.right = '2px';
+                block.textContent = evt.title;
+                block.title = `${evt.title}\n${new Date(evt.startDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})} - ${new Date(evt.endDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}\n${evt.interpretType}\n${evt.assignee || '미지정'}`;
+                block.onclick = function() { openAssignModal(evt.eventId); };
+                
+                targetSlot.appendChild(block);
+            });
         }
 
         function updateStockWeekly() {
@@ -818,8 +901,8 @@
                     }
                     
                     slot.innerHTML = `
-                        <div class="slot-stock">🆕 송${av.newTx} 수${av.newRx}</div>
-                        <div class="slot-stock">📻 송${av.oldTx} 수${av.oldRx}</div>
+                        <div class="slot-stock">✨ 송${av.newTx} 수${av.newRx}</div>
+                        <div class="slot-stock">⚙️ 송${av.oldTx} 수${av.oldRx}</div>
                     `;
                     
                     grid.appendChild(slot);
@@ -998,9 +1081,9 @@
                         📅 ${new Date(r.startDate).toLocaleString('ko-KR')} ~ ${new Date(r.endDate).toLocaleString('ko-KR')}
                     </div>
                     <div class="device-list">
-                        ${r.newTransmitter > 0 ? `🆕 신형 송신기: ${r.newTransmitter}대` : ''}
+                        ${r.newTransmitter > 0 ? `✨ 신형 송신기: ${r.newTransmitter}대` : ''}
                         ${r.newReceiver > 0 ? ` / 수신기: ${r.newReceiver}대` : ''}
-                        ${r.oldTransmitter > 0 ? `<br>📻 구형 송신기: ${r.oldTransmitter}대` : ''}
+                        ${r.oldTransmitter > 0 ? `<br>⚙️ 구형 송신기: ${r.oldTransmitter}대` : ''}
                         ${r.oldReceiver > 0 ? ` / 수신기: ${r.oldReceiver}대` : ''}
                     </div>
                 </div>
