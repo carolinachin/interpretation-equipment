@@ -1,116 +1,9 @@
-<!-- 기기 배정 모달 -->
-    <div class="modal" id="assignModal">
-        <div class="modal-content">
-            <div class="modal-header" id="assignModalTitle">기기 배정</div>
-            <div id="assignModalInfo" class="modal-info"></div>
-            
-            <h3 style="margin: 25px 0 20px 0; color: #374151; font-size: 1.3rem;">사용 기기 선택</h3>
-            <div class="device-selector">
-                <div class="device-input-group">
-                    <label>✨ 신형 송신기</label>
-                    <select id="modalNewTx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                    </select>
-                </div>
-                <div class="device-input-group">
-                    <label>✨ 신형 수신기</label>
-                    <select id="modalNewRx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                        <option value="5">5대</option>
-                        <option value="6">6대</option>
-                        <option value="7">7대</option>
-                        <option value="8">8대</option>
-                        <option value="9">9대</option>
-                        <option value="10">10대</option>
-                        <option value="11">11대</option>
-                        <option value="12">12대</option>
-                        <option value="13">13대</option>
-                        <option value="14">14대</option>
-                        <option value="15">15대</option>
-                        <option value="16">16대</option>
-                        <option value="17">17대</option>
-                        <option value="18">18대</option>
-                        <option value="19">19대</option>
-                        <option value="20">20대</option>
-                        <option value="21">21대</option>
-                        <option value="22">22대</option>
-                        <option value="23">23대</option>
-                        <option value="24">24대</option>
-                        <option value="25">25대</option>
-                        <option value="26">26대</option>
-                        <option value="27">27대</option>
-                        <option value="28">28대</option>
-                    </select>
-                </div>
-                <div class="device-input-group">
-                    <label>⚙️ 구형 송신기</label>
-                    <select id="modalOldTx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                        <option value="5">5대</option>
-                    </select>
-                </div>
-                <div class="device-input-group">
-                    <label>⚙️ 구형 수신기</label>
-                    <select id="modalOldRx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                        <option value="5">5대</option>
-                        <option value="6">6대</option>
-                        <option value="7">7대</option>
-                        <option value="8">8대</option>
-                        <option value="9">9대</option>
-                        <option value="10">10대</option>
-                        <option value="11">11대</option>
-                        <option value="12">12대</option>
-                        <option value="13">13대</option>
-                        <option value="14">14대</option>
-                        <option value="15">15대</option>
-                        <option value="16">16대</option>
-                        <option value="17">17대</option>
-                        <option value="18">18대</option>
-                        <option value="19">19대</option>
-                        <option value="20">20대</option>
-                        <option value="21">21대</option>
-                        <option value="22">22대</option>
-                        <option value="23">23대</option>
-                        <option value="24">24대</option>
-                        <option value="25">25대</option>
-                        <option value="26">26대</option>
-                        <option value="27">27대</option>
-                        <option value="28">28대</option>
-                        <option value="29">29대</option>
-                        <option value="30">30대</option>
-                        <option value="31">31대</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" onclick="closeAssignModal()">취소</button>
-                <button class="modal-btn confirm" onclick="saveAssignment()">배정하기</button>
-            </div>
-        </div>
-    </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>통역기기 관리 v2</title>
+    <title>통역기기 관리 v3</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -140,12 +33,12 @@
         .sync-btn {
             background: #10b981;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 10px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
         }
         .sync-btn:hover { background: #059669; }
         .sync-btn:disabled { background: #9ca3af; cursor: not-allowed; }
@@ -191,77 +84,14 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .card h2 { color: #1f2937; font-size: 1.5rem; margin-bottom: 20px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #374151; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .time-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .device-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .device-input-group {
-            background: #f9fafb;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #e5e7eb;
-        }
-        .device-input-group label { display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
-        .device-input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            background: white;
-            cursor: pointer;
-        }
-        .device-input-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-        }
-        .alert-box {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #92400e;
-        }
-        .info-box {
-            background: #dbeafe;
-            border: 2px solid #3b82f6;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #1e40af;
-        }
         .week-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        .week-nav button, .month-nav button {
-            padding: 8px 16px;
+        .week-nav button {
+            padding: 10px 20px;
             border: none;
             border-radius: 8px;
             background: #667eea;
@@ -270,6 +100,25 @@
             cursor: pointer;
         }
         .week-nav button:hover { background: #5568d3; }
+        .all-day-events {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .all-day-event {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #92400e;
+            cursor: pointer;
+            border-left: 3px solid #f59e0b;
+        }
+        .all-day-event:hover { background: #fef3c7; }
         .weekly-grid {
             display: grid;
             grid-template-columns: 80px repeat(7, 1fr);
@@ -309,10 +158,6 @@
             border-right: 1px solid #e5e7eb;
             border-bottom: 1px solid #e5e7eb;
         }
-        .time-slot.available { background: #f0fdf4; }
-        .time-slot.low { background: #fef3c7; }
-        .time-slot.critical { background: #fee2e2; }
-        .slot-stock { font-weight: 600; margin-bottom: 2px; }
         .event-block {
             position: absolute;
             background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
@@ -324,8 +169,6 @@
             color: #3730a3;
             cursor: pointer;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
             box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
             transition: all 0.2s;
             z-index: 10;
@@ -340,6 +183,11 @@
             background: linear-gradient(135deg, #dbeafe 0%, #bae6fd 100%);
             border-color: #0ea5e9;
             color: #0c4a6e;
+        }
+        .event-block.출장 {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            border-color: #ef4444;
+            color: #991b1b;
         }
         .event-block.assigned {
             background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
@@ -365,98 +213,96 @@
             border-radius: 4px;
             font-weight: 700;
         }
-        .all-day-events {
-            background: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 15px;
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
         }
-        .all-day-event {
+        .modal.active { display: flex !important; }
+        .modal-content {
             background: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #92400e;
-            cursor: pointer;
-            border-left: 3px solid #f59e0b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
-        .all-day-event:hover {
-            background: #fef3c7;
+        .modal-header {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
         }
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        .calendar-day {
-            min-height: 100px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 8px;
-            background: white;
-        }
-        .calendar-day.empty { border: none; background: transparent; }
-        .calendar-header-day {
-            background: #f3f4f6;
-            padding: 10px;
-            text-align: center;
-            font-weight: 700;
-            border-radius: 8px;
-        }
-        .day-number { font-weight: 700; font-size: 16px; margin-bottom: 5px; }
-        .day-stock {
-            font-size: 11px;
-            padding: 3px 6px;
-            border-radius: 4px;
-            margin-bottom: 3px;
-            font-weight: 600;
-        }
-        .day-stock.new { background: #dbeafe; color: #1e40af; }
-        .day-stock.old { background: #fef3c7; color: #92400e; }
-        .day-stock.low { background: #fecaca; color: #991b1b; }
-        .rental-item {
-            background: #f9fafb;
+        .modal-info {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.8;
         }
-        .rental-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+        .device-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+        .device-input-group {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
         }
-        .rental-title { font-weight: 700; font-size: 18px; color: #1f2937; }
-        .rental-actions { display: flex; gap: 8px; }
-        .btn-small {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 12px;
+        .device-input-group label { display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px; }
+        .device-input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
+            background: white;
             cursor: pointer;
         }
-        .btn-delete { background: #ef4444; color: white; }
-        .btn-delete:hover { background: #dc2626; }
-        .device-list {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-size: 13px;
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 20px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .modal-btn.cancel {
+            background: #f3f4f6;
+            color: #374151;
+            border: 3px solid #d1d5db;
+        }
+        .modal-btn.cancel:hover {
+            background: #e5e7eb;
+            transform: scale(1.05);
+        }
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+        }
+        .modal-btn.confirm:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.6);
         }
         .loading { text-align: center; padding: 40px; color: #6b7280; }
-        @media (max-width: 768px) {
-            .form-row, .device-selector, .inventory-grid, .time-selector { grid-template-columns: 1fr; }
-            .weekly-grid { grid-template-columns: 60px repeat(7, 1fr); font-size: 10px; }
-            .header h1 { font-size: 1.5rem; }
-        }
     </style>
 </head>
 <body>
@@ -499,10 +345,7 @@
 
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('teamup')">TeamUp 주간</button>
-            <button class="tab-btn" onclick="showTab('weekly')">재고 주간뷰</button>
-            <button class="tab-btn" onclick="showTab('monthly')">재고 월간뷰</button>
-            <button class="tab-btn" onclick="showTab('rental')">수동신청</button>
-            <button class="tab-btn" onclick="showTab('list')">목록</button>
+            <button class="tab-btn" onclick="showTab('list')">반출 목록</button>
         </div>
 
         <div id="teamup" class="content active">
@@ -520,144 +363,6 @@
             </div>
         </div>
 
-        <div id="weekly" class="content">
-            <div class="card" style="padding: 0; overflow: hidden;">
-                <div style="padding: 20px; border-bottom: 2px solid #e5e7eb;">
-                    <div class="week-nav">
-                        <button onclick="changeStockWeek(-1)">◀ 이전 주</button>
-                        <h2 id="stockWeekTitle" style="margin: 0;">주간 재고 현황</h2>
-                        <button onclick="changeStockWeek(1)">다음 주 ▶</button>
-                    </div>
-                </div>
-                <div style="overflow-x: auto;">
-                    <div class="weekly-grid" id="stockWeeklyGrid"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="monthly" class="content">
-            <div class="card">
-                <div class="week-nav">
-                    <button onclick="changeMonth(-1)">◀ 이전 달</button>
-                    <h2 id="monthTitle" style="margin: 0;">월간 재고 현황</h2>
-                    <button onclick="changeMonth(1)">다음 달 ▶</button>
-                </div>
-                <div class="calendar" id="calendarGrid"></div>
-            </div>
-        </div>
-
-        <div id="rental" class="content">
-            <div class="card">
-                <h2>직접 반출 신청</h2>
-                <div class="alert-box">💡 TeamUp에 없는 일정이거나 긴급한 경우 직접 신청하세요.</div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>사용자 *</label>
-                        <select id="userName">
-                            <option value="">선택</option>
-                            <option value="규연">규연</option>
-                            <option value="다현">다현</option>
-                            <option value="소담">소담</option>
-                            <option value="성훈">성훈</option>
-                            <option value="승연">승연</option>
-                            <option value="승헌">승헌</option>
-                            <option value="아영">아영</option>
-                            <option value="에리카">에리카</option>
-                            <option value="영아">영아</option>
-                            <option value="우빈">우빈</option>
-                            <option value="은혜">은혜</option>
-                            <option value="주화">주화</option>
-                            <option value="하경">하경</option>
-                            <option value="혜원">혜원</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>유형 *</label>
-                        <select id="rentalType">
-                            <option value="현장통역">현장통역</option>
-                            <option value="외근">외근</option>
-                            <option value="국내 출장">국내 출장</option>
-                            <option value="해외 출장">해외 출장</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>시작일 *</label>
-                        <input type="date" id="startDate">
-                    </div>
-                    <div class="form-group">
-                        <label>종료일 *</label>
-                        <input type="date" id="endDate">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>시작 시간 *</label>
-                        <div class="time-selector">
-                            <select id="startAmPm"><option value="AM">오전</option><option value="PM">오후</option></select>
-                            <select id="startHour">
-                                <option value="9" selected>9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                            <select id="startMinute"><option value="00">00</option><option value="30">30</option></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>종료 시간 *</label>
-                        <div class="time-selector">
-                            <select id="endAmPm"><option value="AM">오전</option><option value="PM" selected>오후</option></select>
-                            <select id="endHour">
-                                <option value="6" selected>6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select>
-                            <select id="endMinute"><option value="00">00</option><option value="30">30</option></select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>사유 *</label>
-                    <textarea id="reason" rows="2" placeholder="워크샵, 출장 등"></textarea>
-                </div>
-
-                <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기</h3>
-                <div class="device-selector">
-                    <div class="device-input-group">
-                        <label>🆕 신형 송신기</label>
-                        <input type="number" id="newTx" min="0" value="0">
-                    </div>
-                    <div class="device-input-group">
-                        <label>🆕 신형 수신기</label>
-                        <input type="number" id="newRx" min="0" value="0">
-                    </div>
-                    <div class="device-input-group">
-                        <label>📻 구형 송신기</label>
-                        <input type="number" id="oldTx" min="0" value="0">
-                    </div>
-                    <div class="device-input-group">
-                        <label>📻 구형 수신기</label>
-                        <input type="number" id="oldRx" min="0" value="0">
-                    </div>
-                </div>
-
-                <button class="submit-btn" onclick="submitRental()">신청하기</button>
-            </div>
-        </div>
-
         <div id="list" class="content">
             <div class="card">
                 <h2>전체 반출 목록</h2>
@@ -666,13 +371,12 @@
         </div>
     </div>
 
-    <!-- 기기 배정 모달 -->
     <div class="modal" id="assignModal">
         <div class="modal-content">
             <div class="modal-header" id="assignModalTitle">기기 배정</div>
             <div id="assignModalInfo" class="modal-info"></div>
             
-            <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기 선택</h3>
+            <h3 style="margin: 25px 0 20px 0; color: #374151; font-size: 1.3rem;">사용 기기 선택</h3>
             <div class="device-selector">
                 <div class="device-input-group">
                     <label>✨ 신형 송신기</label>
@@ -686,37 +390,7 @@
                 </div>
                 <div class="device-input-group">
                     <label>✨ 신형 수신기</label>
-                    <select id="modalNewRx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                        <option value="5">5대</option>
-                        <option value="6">6대</option>
-                        <option value="7">7대</option>
-                        <option value="8">8대</option>
-                        <option value="9">9대</option>
-                        <option value="10">10대</option>
-                        <option value="11">11대</option>
-                        <option value="12">12대</option>
-                        <option value="13">13대</option>
-                        <option value="14">14대</option>
-                        <option value="15">15대</option>
-                        <option value="16">16대</option>
-                        <option value="17">17대</option>
-                        <option value="18">18대</option>
-                        <option value="19">19대</option>
-                        <option value="20">20대</option>
-                        <option value="21">21대</option>
-                        <option value="22">22대</option>
-                        <option value="23">23대</option>
-                        <option value="24">24대</option>
-                        <option value="25">25대</option>
-                        <option value="26">26대</option>
-                        <option value="27">27대</option>
-                        <option value="28">28대</option>
-                    </select>
+                    <select id="modalNewRx"></select>
                 </div>
                 <div class="device-input-group">
                     <label>⚙️ 구형 송신기</label>
@@ -731,40 +405,7 @@
                 </div>
                 <div class="device-input-group">
                     <label>⚙️ 구형 수신기</label>
-                    <select id="modalOldRx">
-                        <option value="0">0대</option>
-                        <option value="1">1대</option>
-                        <option value="2">2대</option>
-                        <option value="3">3대</option>
-                        <option value="4">4대</option>
-                        <option value="5">5대</option>
-                        <option value="6">6대</option>
-                        <option value="7">7대</option>
-                        <option value="8">8대</option>
-                        <option value="9">9대</option>
-                        <option value="10">10대</option>
-                        <option value="11">11대</option>
-                        <option value="12">12대</option>
-                        <option value="13">13대</option>
-                        <option value="14">14대</option>
-                        <option value="15">15대</option>
-                        <option value="16">16대</option>
-                        <option value="17">17대</option>
-                        <option value="18">18대</option>
-                        <option value="19">19대</option>
-                        <option value="20">20대</option>
-                        <option value="21">21대</option>
-                        <option value="22">22대</option>
-                        <option value="23">23대</option>
-                        <option value="24">24대</option>
-                        <option value="25">25대</option>
-                        <option value="26">26대</option>
-                        <option value="27">27대</option>
-                        <option value="28">28대</option>
-                        <option value="29">29대</option>
-                        <option value="30">30대</option>
-                        <option value="31">31대</option>
-                    </select>
+                    <select id="modalOldRx"></select>
                 </div>
             </div>
             
@@ -782,11 +423,30 @@
         let rentals = [];
         let events = [];
         let teamupWeek = new Date();
-        let stockWeek = new Date();
-        let currentMonth = new Date();
         let selectedEvent = null;
 
+        // 드롭다운 초기화
+        function initDropdowns() {
+            const newRx = document.getElementById('modalNewRx');
+            const oldRx = document.getElementById('modalOldRx');
+            
+            for (let i = 0; i <= 28; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i + '대';
+                newRx.appendChild(opt);
+            }
+            
+            for (let i = 0; i <= 31; i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = i + '대';
+                oldRx.appendChild(opt);
+            }
+        }
+
         async function init() {
+            initDropdowns();
             try {
                 const test = await fetch(WEB_APP_URL + '?action=getInventory', { method: 'GET', redirect: 'follow' });
                 if (!test.ok) throw new Error('서버 오류');
@@ -803,9 +463,8 @@
 
         function initDummy() {
             events = [
-                { eventId: '1', title: 'KBR 워크샵', startDate: '2026-01-20T09:00:00', endDate: '2026-01-20T17:00:00', interpretType: '현장통역', assignee: '다현' },
-                { eventId: '2', title: 'G-Star', startDate: '2026-01-22T10:00:00', endDate: '2026-01-22T12:00:00', interpretType: '해외 출장', assignee: '승연' },
-                { eventId: '3', title: '델라웨어 미팅', startDate: '2026-01-23T14:00:00', endDate: '2026-01-23T16:00:00', interpretType: '현장통역', assignee: '소담' }
+                { eventId: '1', title: 'Pangyo | Lunch', startDate: '2026-01-20T12:00:00', endDate: '2026-01-20T13:00:00', interpretType: '현장통역', assignee: '다현' },
+                { eventId: '2', title: '[출장] 주화 - LA', startDate: '2026-01-22T08:00:00', endDate: '2026-01-24T18:00:00', interpretType: '출장', assignee: '주화' }
             ];
             updateAll();
         }
@@ -829,9 +488,14 @@
 
         async function loadTeamUpEvents() {
             try {
+                console.log('TeamUp 로드...');
                 const r = await fetch(WEB_APP_URL + '?action=getTeamUpEvents', { method: 'GET', redirect: 'follow' });
                 const d = await r.json();
-                if (d.success) events = d.events;
+                console.log('TeamUp 응답:', d);
+                if (d.success) {
+                    events = d.events;
+                    console.log('이벤트 수:', events.length);
+                }
             } catch (e) { console.error('TeamUp 오류:', e); }
         }
 
@@ -852,16 +516,21 @@
             btn.textContent = '⏳ 동기화...';
             btn.disabled = true;
             try {
+                console.log('동기화 시작...');
                 const r = await fetch(WEB_APP_URL + '?action=syncTeamUp', { method: 'GET', redirect: 'follow' });
                 const d = await r.json();
+                console.log('동기화 결과:', d);
                 if (d.success) {
-                    alert(`✅ 완료!\n전체: ${d.total}개\n저장: ${d.count}개`);
+                    alert(`✅ 완료!\n\n전체: ${d.total}개\n새로 추가: ${d.count}개\n업데이트: ${d.updated}개`);
                     await loadTeamUpEvents();
                     updateAll();
                 } else {
                     alert('❌ 실패: ' + d.error);
                 }
-            } catch (e) { alert('❌ 오류: ' + e); }
+            } catch (e) {
+                console.error('동기화 오류:', e);
+                alert('❌ 오류: ' + e);
+            }
             btn.textContent = '📅 TeamUp 동기화';
             btn.disabled = false;
         }
@@ -878,28 +547,13 @@
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById(tab).classList.add('active');
             event.target.classList.add('active');
-            
-            if (tab === 'teamup') updateTeamUpWeekly();
-            else if (tab === 'weekly') updateStockWeekly();
-            else if (tab === 'monthly') updateMonthly();
-            else if (tab === 'list') updateList();
+            if (tab === 'list') updateList();
         }
 
         function changeTeamUpWeek(d) {
             if (d === 0) teamupWeek = new Date();
             else teamupWeek.setDate(teamupWeek.getDate() + (d * 7));
             updateTeamUpWeekly();
-        }
-
-        function changeStockWeek(d) {
-            if (d === 0) stockWeek = new Date();
-            else stockWeek.setDate(stockWeek.getDate() + (d * 7));
-            updateStockWeekly();
-        }
-
-        function changeMonth(d) {
-            currentMonth.setMonth(currentMonth.getMonth() + d);
-            updateMonthly();
         }
 
         function updateTeamUpWeekly() {
@@ -936,11 +590,12 @@
                 allDaySection.style.gridColumn = '1 / -1';
                 allDaySection.className = 'all-day-events';
                 allDaySection.innerHTML = '<div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: #92400e;">📅 종일/장기 일정</div>' +
-                    allDayEvents.map(evt => 
-                        `<div class="all-day-event" onclick="openAssignModal('${evt.eventId}')">
-                            ${evt.title} | ${evt.interpretType} | ${evt.assignee || '미지정'}
-                        </div>`
-                    ).join('');
+                    allDayEvents.map(evt => {
+                        const isAssigned = rentals.some(r => r.reason === evt.title && r.status === '사용중');
+                        return `<div class="all-day-event" onclick="openAssignModal('${evt.eventId}')">
+                            ${isAssigned ? '✓ ' : ''}${evt.title} | ${evt.interpretType} | ${evt.assignee || '미지정'}
+                        </div>`;
+                    }).join('');
                 grid.appendChild(allDaySection);
             }
             
@@ -952,7 +607,6 @@
             const days = ['월', '화', '수', '목', '금', '토', '일'];
             const today = new Date().toDateString();
             
-            const dayColumns = [];
             for (let i = 0; i < 7; i++) {
                 const d = new Date(ws);
                 d.setDate(ws.getDate() + i);
@@ -960,9 +614,7 @@
                 h.className = 'day-header';
                 if (d.toDateString() === today) h.classList.add('today');
                 h.innerHTML = `${days[i]}<br>${d.getMonth()+1}/${d.getDate()}`;
-                h.style.position = 'relative';
                 grid.appendChild(h);
-                dayColumns.push(h);
             }
             
             for (let hour = 9; hour <= 18; hour++) {
@@ -985,9 +637,7 @@
                 const end = new Date(evt.endDate);
                 const dayIndex = (start.getDay() + 6) % 7;
                 const startHour = start.getHours();
-                const endHour = end.getHours();
                 const startMin = start.getMinutes();
-                const endMin = end.getMinutes();
                 
                 if (startHour < 9 || startHour > 18) return;
                 
@@ -998,7 +648,6 @@
                 const height = Math.max(duration * 70, 40);
                 const topOffset = (startMin / 60) * 70;
                 
-                // 배정 여부 확인
                 const isAssigned = rentals.some(r => r.reason === evt.title && r.status === '사용중');
                 
                 const block = document.createElement('div');
@@ -1008,7 +657,6 @@
                 block.style.left = '2px';
                 block.style.right = '2px';
                 
-                // 배정된 기기 정보 추가
                 let deviceInfo = '';
                 if (isAssigned) {
                     const rental = rentals.find(r => r.reason === evt.title && r.status === '사용중');
@@ -1023,261 +671,13 @@
                 }
                 
                 block.innerHTML = evt.title + deviceInfo + (isAssigned ? '<div class="assigned-badge">✓</div>' : '');
-                block.title = `${evt.title}\n${new Date(evt.startDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})} - ${new Date(evt.endDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}\n${evt.interpretType}\n${evt.assignee || '미지정'}${isAssigned ? '\n✓ 기기 배정 완료' : '\n클릭하여 기기 배정'}`;
-                block.onclick = function() { openAssignModal(evt.eventId); };
+                block.onclick = function(e) { 
+                    e.stopPropagation();
+                    openAssignModal(evt.eventId); 
+                };
                 
                 targetSlot.appendChild(block);
             });
-        }
-
-        function updateStockWeekly() {
-            const grid = document.getElementById('stockWeeklyGrid');
-            grid.innerHTML = '';
-            
-            const ws = new Date(stockWeek);
-            ws.setDate(stockWeek.getDate() - stockWeek.getDay() + 1);
-            const we = new Date(ws);
-            we.setDate(ws.getDate() + 6);
-            
-            document.getElementById('stockWeekTitle').textContent = 
-                `${ws.getMonth()+1}/${ws.getDate()} ~ ${we.getMonth()+1}/${we.getDate()}`;
-            
-            const corner = document.createElement('div');
-            corner.className = 'time-label';
-            corner.textContent = '시간';
-            grid.appendChild(corner);
-            
-            const days = ['월', '화', '수', '목', '금', '토', '일'];
-            const today = new Date().toDateString();
-            
-            for (let i = 0; i < 7; i++) {
-                const d = new Date(ws);
-                d.setDate(ws.getDate() + i);
-                const h = document.createElement('div');
-                h.className = 'day-header';
-                if (d.toDateString() === today) h.classList.add('today');
-                h.innerHTML = `${days[i]}<br>${d.getMonth()+1}/${d.getDate()}`;
-                grid.appendChild(h);
-            }
-            
-            for (let hour = 9; hour <= 18; hour++) {
-                const tl = document.createElement('div');
-                tl.className = 'time-label';
-                tl.textContent = hour + ':00';
-                grid.appendChild(tl);
-                
-                for (let i = 0; i < 7; i++) {
-                    const d = new Date(ws);
-                    d.setDate(ws.getDate() + i);
-                    d.setHours(hour, 0, 0, 0);
-                    
-                    const slot = document.createElement('div');
-                    slot.className = 'time-slot';
-                    
-                    const used = calcUsedAtTime(d);
-                    const av = {
-                        newTx: inv.new_model.transmitter - used.newTx,
-                        newRx: inv.new_model.receiver - used.newRx,
-                        oldTx: inv.old_model.transmitter - used.oldTx,
-                        oldRx: inv.old_model.receiver - used.oldRx
-                    };
-                    
-                    if (av.newTx <= 1 || av.newRx <= 5 || av.oldTx <= 1 || av.oldRx <= 5) {
-                        slot.classList.add('critical');
-                    } else if (av.newTx <= 2 || av.newRx <= 10 || av.oldTx <= 2 || av.oldRx <= 10) {
-                        slot.classList.add('low');
-                    } else {
-                        slot.classList.add('available');
-                    }
-                    
-                    slot.innerHTML = `
-                        <div class="slot-stock">✨ 송${av.newTx} 수${av.newRx}</div>
-                        <div class="slot-stock">⚙️ 송${av.oldTx} 수${av.oldRx}</div>
-                    `;
-                    
-                    grid.appendChild(slot);
-                }
-            }
-        }
-
-        function calcUsedAtTime(dt) {
-            const used = { newTx: 0, newRx: 0, oldTx: 0, oldRx: 0 };
-            rentals.forEach(r => {
-                if (r.status !== '사용중') return;
-                const s = new Date(r.startDate);
-                const e = new Date(r.endDate);
-                if (dt >= s && dt <= e) {
-                    used.newTx += parseInt(r.newTransmitter) || 0;
-                    used.newRx += parseInt(r.newReceiver) || 0;
-                    used.oldTx += parseInt(r.oldTransmitter) || 0;
-                    used.oldRx += parseInt(r.oldReceiver) || 0;
-                }
-            });
-            return used;
-        }
-
-        function updateMonthly() {
-            const grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '';
-            
-            const y = currentMonth.getFullYear();
-            const m = currentMonth.getMonth();
-            document.getElementById('monthTitle').textContent = `${y}년 ${m+1}월 재고`;
-
-            ['일', '월', '화', '수', '목', '금', '토'].forEach(day => {
-                const h = document.createElement('div');
-                h.className = 'calendar-header-day';
-                h.textContent = day;
-                grid.appendChild(h);
-            });
-
-            const first = new Date(y, m, 1);
-            const days = new Date(y, m + 1, 0).getDate();
-            const start = first.getDay();
-
-            for (let i = 0; i < start; i++) {
-                const e = document.createElement('div');
-                e.className = 'calendar-day empty';
-                grid.appendChild(e);
-            }
-
-            for (let day = 1; day <= days; day++) {
-                const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                
-                const used = calcUsedOnDate(ds);
-                const av = {
-                    newTx: inv.new_model.transmitter - used.newTx,
-                    newRx: inv.new_model.receiver - used.newRx,
-                    oldTx: inv.old_model.transmitter - used.oldTx,
-                    oldRx: inv.old_model.receiver - used.oldRx
-                };
-
-                el.innerHTML = `
-                    <div class="day-number">${day}</div>
-                    <div class="day-stock new ${av.newTx <= 1 || av.newRx <= 5 ? 'low' : ''}">
-                        🆕 송${av.newTx} 수${av.newRx}
-                    </div>
-                    <div class="day-stock old ${av.oldTx <= 1 || av.oldRx <= 5 ? 'low' : ''}">
-                        📻 송${av.oldTx} 수${av.oldRx}
-                    </div>
-                `;
-                grid.appendChild(el);
-            }
-        }
-
-        function calcUsedOnDate(ds) {
-            const used = { newTx: 0, newRx: 0, oldTx: 0, oldRx: 0 };
-            rentals.forEach(r => {
-                if (r.status !== '사용중') return;
-                const s = new Date(r.startDate).toISOString().split('T')[0];
-                const e = new Date(r.endDate).toISOString().split('T')[0];
-                if (ds >= s && ds <= e) {
-                    used.newTx += parseInt(r.newTransmitter) || 0;
-                    used.newRx += parseInt(r.newReceiver) || 0;
-                    used.oldTx += parseInt(r.oldTransmitter) || 0;
-                    used.oldRx += parseInt(r.oldReceiver) || 0;
-                }
-            });
-            return used;
-        }
-
-        function getDateTime(date, ampm, hour, min) {
-            let h = parseInt(hour);
-            if (ampm === 'PM' && h !== 12) h += 12;
-            if (ampm === 'AM' && h === 12) h = 0;
-            const dt = new Date(date);
-            dt.setHours(h, parseInt(min), 0, 0);
-            return dt.toISOString();
-        }
-
-        async function submitRental() {
-            const user = document.getElementById('userName').value;
-            const type = document.getElementById('rentalType').value;
-            const sd = document.getElementById('startDate').value;
-            const ed = document.getElementById('endDate').value;
-            const sap = document.getElementById('startAmPm').value;
-            const sh = document.getElementById('startHour').value;
-            const sm = document.getElementById('startMinute').value;
-            const eap = document.getElementById('endAmPm').value;
-            const eh = document.getElementById('endHour').value;
-            const em = document.getElementById('endMinute').value;
-            const reason = document.getElementById('reason').value.trim();
-            
-            const nTx = parseInt(document.getElementById('newTx').value) || 0;
-            const nRx = parseInt(document.getElementById('newRx').value) || 0;
-            const oTx = parseInt(document.getElementById('oldTx').value) || 0;
-            const oRx = parseInt(document.getElementById('oldRx').value) || 0;
-
-            if (!user || !sd || !ed || !reason) {
-                alert('❌ 필수 항목 입력하세요');
-                return;
-            }
-            if (nTx + nRx + oTx + oRx === 0) {
-                alert('❌ 최소 1개 선택하세요');
-                return;
-            }
-
-            const fsd = getDateTime(sd, sap, sh, sm);
-            const fed = getDateTime(ed, eap, eh, em);
-
-            const p = new URLSearchParams({
-                action: 'addRental', user, startDate: fsd, endDate: fed, reason,
-                newTransmitter: nTx, newReceiver: nRx, oldTransmitter: oTx, oldReceiver: oRx, type
-            });
-
-            try {
-                await fetch(WEB_APP_URL + '?' + p.toString());
-                alert('✅ 신청 완료!');
-                document.getElementById('userName').value = '';
-                document.getElementById('reason').value = '';
-                document.getElementById('newTx').value = '0';
-                document.getElementById('newRx').value = '0';
-                document.getElementById('oldTx').value = '0';
-                document.getElementById('oldRx').value = '0';
-                await loadRentals();
-                updateAll();
-            } catch (e) { alert('❌ 오류: ' + e); }
-        }
-
-        async function deleteRental(id) {
-            if (!confirm('삭제하시겠습니까?')) return;
-            const p = new URLSearchParams({ action: 'deleteRental', id });
-            try {
-                await fetch(WEB_APP_URL + '?' + p.toString());
-                alert('✅ 삭제 완료');
-                await loadRentals();
-                updateList();
-            } catch (e) { alert('❌ 오류: ' + e); }
-        }
-
-        function updateList() {
-            const list = document.getElementById('rentalList');
-            if (rentals.length === 0) {
-                list.innerHTML = '<div class="loading">반출 기록이 없습니다</div>';
-                return;
-            }
-
-            list.innerHTML = rentals.slice().reverse().map(r => `
-                <div class="rental-item">
-                    <div class="rental-header">
-                        <div class="rental-title">${r.user} - ${r.reason}</div>
-                        <div class="rental-actions">
-                            <button class="btn-small btn-delete" onclick="deleteRental(${r.id})">삭제</button>
-                        </div>
-                    </div>
-                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 10px;">
-                        📅 ${new Date(r.startDate).toLocaleString('ko-KR')} ~ ${new Date(r.endDate).toLocaleString('ko-KR')}
-                    </div>
-                    <div class="device-list">
-                        ${r.newTransmitter > 0 ? `✨ 신형 송신기: ${r.newTransmitter}대` : ''}
-                        ${r.newReceiver > 0 ? ` / 수신기: ${r.newReceiver}대` : ''}
-                        ${r.oldTransmitter > 0 ? `<br>⚙️ 구형 송신기: ${r.oldTransmitter}대` : ''}
-                        ${r.oldReceiver > 0 ? ` / 수신기: ${r.oldReceiver}대` : ''}
-                    </div>
-                </div>
-            `).join('');
         }
 
         function openAssignModal(eventId) {
@@ -1286,18 +686,16 @@
             
             selectedEvent = event;
             
-            // 이미 배정된 기기 찾기
             const assigned = rentals.find(r => r.reason === event.title && r.status === '사용중');
             
-            document.getElementById('assignModalTitle').textContent = `"${event.title}" 기기 배정`;
+            document.getElementById('assignModalTitle').textContent = event.title;
             document.getElementById('assignModalInfo').innerHTML = `
                 <strong>📅 일정:</strong> ${new Date(event.startDate).toLocaleString('ko-KR')} ~ ${new Date(event.endDate).toLocaleString('ko-KR')}<br>
                 <strong>🎤 유형:</strong> ${event.interpretType}<br>
                 <strong>👤 담당:</strong> ${event.assignee || '미지정'}
-                ${assigned ? '<br><br><strong style="color: #10b981;">✅ 이미 기기가 배정되어 있습니다</strong>' : ''}
+                ${assigned ? '<br><br><strong style="color: #10b981; font-size: 16px;">✅ 이미 기기가 배정되어 있습니다</strong>' : ''}
             `;
             
-            // 이미 배정된 값이 있으면 표시, 없으면 0
             if (assigned) {
                 document.getElementById('modalNewTx').value = assigned.newTransmitter || '0';
                 document.getElementById('modalNewRx').value = assigned.newReceiver || '0';
@@ -1331,10 +729,6 @@
                 return;
             }
 
-            if ((nTx > 0 || nRx > 0) && (oTx > 0 || oRx > 0)) {
-                if (!confirm('⚠️ 신형과 구형을 혼합하시겠습니까?')) return;
-            }
-
             const params = new URLSearchParams({
                 action: 'addRental',
                 user: selectedEvent.assignee || '미지정',
@@ -1359,20 +753,50 @@
             }
         }
 
+        function updateList() {
+            const list = document.getElementById('rentalList');
+            if (rentals.length === 0) {
+                list.innerHTML = '<div class="loading">반출 기록이 없습니다</div>';
+                return;
+            }
+
+            list.innerHTML = rentals.slice().reverse().map(r => `
+                <div style="background: #f9fafb; border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 4px solid #667eea;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="font-weight: 700; font-size: 18px;">${r.user} - ${r.reason}</div>
+                        <button onclick="deleteRental(${r.id})" style="background: #ef4444; color: white; padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">삭제</button>
+                    </div>
+                    <div style="font-size: 14px; color: #6b7280; margin-bottom: 10px;">
+                        📅 ${new Date(r.startDate).toLocaleString('ko-KR')} ~ ${new Date(r.endDate).toLocaleString('ko-KR')}
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; font-size: 13px;">
+                        ${r.newTransmitter > 0 ? `✨ 신형 송신기: ${r.newTransmitter}대` : ''}
+                        ${r.newReceiver > 0 ? ` / 수신기: ${r.newReceiver}대` : ''}
+                        ${r.oldTransmitter > 0 ? `<br>⚙️ 구형 송신기: ${r.oldTransmitter}대` : ''}
+                        ${r.oldReceiver > 0 ? ` / 수신기: ${r.oldReceiver}대` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function deleteRental(id) {
+            if (!confirm('삭제하시겠습니까?')) return;
+            const p = new URLSearchParams({ action: 'deleteRental', id });
+            try {
+                await fetch(WEB_APP_URL + '?' + p.toString());
+                alert('✅ 삭제 완료');
+                await loadRentals();
+                updateAll();
+            } catch (e) { alert('❌ 오류: ' + e); }
+        }
+
         function updateAll() {
             updateInvDisplay();
             updateTeamUpWeekly();
-            updateStockWeekly();
-            updateMonthly();
             updateList();
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('startDate').value = today;
-            document.getElementById('endDate').value = today;
-            init();
-        });
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
