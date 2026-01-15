@@ -589,13 +589,27 @@
                 const allDaySection = document.createElement('div');
                 allDaySection.style.gridColumn = '1 / -1';
                 allDaySection.className = 'all-day-events';
-                allDaySection.innerHTML = '<div style="font-weight: 700; font-size: 12px; margin-bottom: 8px; color: #92400e;">📅 종일/장기 일정</div>' +
-                    allDayEvents.map(evt => {
-                        const isAssigned = rentals.some(r => r.reason === evt.title && r.status === '사용중');
-                        return `<div class="all-day-event" onclick="openAssignModal('${evt.eventId}')">
-                            ${isAssigned ? '✓ ' : ''}${evt.title} | ${evt.interpretType} | ${evt.assignee || '미지정'}
-                        </div>`;
-                    }).join('');
+                
+                const header = document.createElement('div');
+                header.style.fontWeight = '700';
+                header.style.fontSize = '12px';
+                header.style.marginBottom = '8px';
+                header.style.color = '#92400e';
+                header.textContent = '📅 종일/장기 일정';
+                allDaySection.appendChild(header);
+                
+                allDayEvents.forEach(evt => {
+                    const isAssigned = rentals.some(r => r.reason === evt.title && r.status === '사용중');
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'all-day-event';
+                    eventDiv.textContent = (isAssigned ? '✓ ' : '') + evt.title + ' | ' + evt.interpretType + ' | ' + (evt.assignee || '미지정');
+                    eventDiv.onclick = function() {
+                        console.log('종일 이벤트 클릭:', evt.eventId);
+                        openAssignModal(evt.eventId);
+                    };
+                    allDaySection.appendChild(eventDiv);
+                });
+                
                 grid.appendChild(allDaySection);
             }
             
