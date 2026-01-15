@@ -1,4 +1,111 @@
-<!DOCTYPE html>
+<!-- 기기 배정 모달 -->
+    <div class="modal" id="assignModal">
+        <div class="modal-content">
+            <div class="modal-header" id="assignModalTitle">기기 배정</div>
+            <div id="assignModalInfo" class="modal-info"></div>
+            
+            <h3 style="margin: 25px 0 20px 0; color: #374151; font-size: 1.3rem;">사용 기기 선택</h3>
+            <div class="device-selector">
+                <div class="device-input-group">
+                    <label>✨ 신형 송신기</label>
+                    <select id="modalNewTx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                    </select>
+                </div>
+                <div class="device-input-group">
+                    <label>✨ 신형 수신기</label>
+                    <select id="modalNewRx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                        <option value="5">5대</option>
+                        <option value="6">6대</option>
+                        <option value="7">7대</option>
+                        <option value="8">8대</option>
+                        <option value="9">9대</option>
+                        <option value="10">10대</option>
+                        <option value="11">11대</option>
+                        <option value="12">12대</option>
+                        <option value="13">13대</option>
+                        <option value="14">14대</option>
+                        <option value="15">15대</option>
+                        <option value="16">16대</option>
+                        <option value="17">17대</option>
+                        <option value="18">18대</option>
+                        <option value="19">19대</option>
+                        <option value="20">20대</option>
+                        <option value="21">21대</option>
+                        <option value="22">22대</option>
+                        <option value="23">23대</option>
+                        <option value="24">24대</option>
+                        <option value="25">25대</option>
+                        <option value="26">26대</option>
+                        <option value="27">27대</option>
+                        <option value="28">28대</option>
+                    </select>
+                </div>
+                <div class="device-input-group">
+                    <label>⚙️ 구형 송신기</label>
+                    <select id="modalOldTx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                        <option value="5">5대</option>
+                    </select>
+                </div>
+                <div class="device-input-group">
+                    <label>⚙️ 구형 수신기</label>
+                    <select id="modalOldRx">
+                        <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
+                        <option value="5">5대</option>
+                        <option value="6">6대</option>
+                        <option value="7">7대</option>
+                        <option value="8">8대</option>
+                        <option value="9">9대</option>
+                        <option value="10">10대</option>
+                        <option value="11">11대</option>
+                        <option value="12">12대</option>
+                        <option value="13">13대</option>
+                        <option value="14">14대</option>
+                        <option value="15">15대</option>
+                        <option value="16">16대</option>
+                        <option value="17">17대</option>
+                        <option value="18">18대</option>
+                        <option value="19">19대</option>
+                        <option value="20">20대</option>
+                        <option value="21">21대</option>
+                        <option value="22">22대</option>
+                        <option value="23">23대</option>
+                        <option value="24">24대</option>
+                        <option value="25">25대</option>
+                        <option value="26">26대</option>
+                        <option value="27">27대</option>
+                        <option value="28">28대</option>
+                        <option value="29">29대</option>
+                        <option value="30">30대</option>
+                        <option value="31">31대</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeAssignModal()">취소</button>
+                <button class="modal-btn confirm" onclick="saveAssignment()">배정하기</button>
+            </div>
+        </div>
+    </div><!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -234,10 +341,29 @@
             border-color: #0ea5e9;
             color: #0c4a6e;
         }
-        .event-block.출장 {
-            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
-            border-color: #ef4444;
-            color: #991b1b;
+        .event-block.assigned {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #10b981;
+            color: #065f46;
+        }
+        .event-block.외근.assigned {
+            background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%);
+            border-color: #0891b2;
+        }
+        .event-block.출장.assigned {
+            background: linear-gradient(135deg, #fca5a5 0%, #f87171 100%);
+            border-color: #dc2626;
+        }
+        .assigned-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #10b981;
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 700;
         }
         .all-day-events {
             background: #fef3c7;
@@ -544,7 +670,7 @@
     <div class="modal" id="assignModal">
         <div class="modal-content">
             <div class="modal-header" id="assignModalTitle">기기 배정</div>
-            <div id="assignModalInfo" style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;"></div>
+            <div id="assignModalInfo" class="modal-info"></div>
             
             <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기 선택</h3>
             <div class="device-selector">
@@ -562,11 +688,33 @@
                     <label>✨ 신형 수신기</label>
                     <select id="modalNewRx">
                         <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
                         <option value="5">5대</option>
+                        <option value="6">6대</option>
+                        <option value="7">7대</option>
+                        <option value="8">8대</option>
+                        <option value="9">9대</option>
                         <option value="10">10대</option>
+                        <option value="11">11대</option>
+                        <option value="12">12대</option>
+                        <option value="13">13대</option>
+                        <option value="14">14대</option>
                         <option value="15">15대</option>
+                        <option value="16">16대</option>
+                        <option value="17">17대</option>
+                        <option value="18">18대</option>
+                        <option value="19">19대</option>
                         <option value="20">20대</option>
+                        <option value="21">21대</option>
+                        <option value="22">22대</option>
+                        <option value="23">23대</option>
+                        <option value="24">24대</option>
                         <option value="25">25대</option>
+                        <option value="26">26대</option>
+                        <option value="27">27대</option>
                         <option value="28">28대</option>
                     </select>
                 </div>
@@ -585,11 +733,35 @@
                     <label>⚙️ 구형 수신기</label>
                     <select id="modalOldRx">
                         <option value="0">0대</option>
+                        <option value="1">1대</option>
+                        <option value="2">2대</option>
+                        <option value="3">3대</option>
+                        <option value="4">4대</option>
                         <option value="5">5대</option>
+                        <option value="6">6대</option>
+                        <option value="7">7대</option>
+                        <option value="8">8대</option>
+                        <option value="9">9대</option>
                         <option value="10">10대</option>
+                        <option value="11">11대</option>
+                        <option value="12">12대</option>
+                        <option value="13">13대</option>
+                        <option value="14">14대</option>
                         <option value="15">15대</option>
+                        <option value="16">16대</option>
+                        <option value="17">17대</option>
+                        <option value="18">18대</option>
+                        <option value="19">19대</option>
                         <option value="20">20대</option>
+                        <option value="21">21대</option>
+                        <option value="22">22대</option>
+                        <option value="23">23대</option>
+                        <option value="24">24대</option>
                         <option value="25">25대</option>
+                        <option value="26">26대</option>
+                        <option value="27">27대</option>
+                        <option value="28">28대</option>
+                        <option value="29">29대</option>
                         <option value="30">30대</option>
                         <option value="31">31대</option>
                     </select>
@@ -826,14 +998,32 @@
                 const height = Math.max(duration * 70, 40);
                 const topOffset = (startMin / 60) * 70;
                 
+                // 배정 여부 확인
+                const isAssigned = rentals.some(r => r.reason === evt.title && r.status === '사용중');
+                
                 const block = document.createElement('div');
-                block.className = 'event-block ' + evt.interpretType.replace(/ /g, '');
+                block.className = 'event-block ' + evt.interpretType.replace(/ /g, '') + (isAssigned ? ' assigned' : '');
                 block.style.height = height + 'px';
                 block.style.top = topOffset + 'px';
                 block.style.left = '2px';
                 block.style.right = '2px';
-                block.textContent = evt.title;
-                block.title = `${evt.title}\n${new Date(evt.startDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})} - ${new Date(evt.endDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}\n${evt.interpretType}\n${evt.assignee || '미지정'}`;
+                
+                // 배정된 기기 정보 추가
+                let deviceInfo = '';
+                if (isAssigned) {
+                    const rental = rentals.find(r => r.reason === evt.title && r.status === '사용중');
+                    if (rental) {
+                        const devices = [];
+                        if (rental.newTransmitter > 0) devices.push(`✨송${rental.newTransmitter}`);
+                        if (rental.newReceiver > 0) devices.push(`수${rental.newReceiver}`);
+                        if (rental.oldTransmitter > 0) devices.push(`⚙️송${rental.oldTransmitter}`);
+                        if (rental.oldReceiver > 0) devices.push(`수${rental.oldReceiver}`);
+                        deviceInfo = '<br>' + devices.join(' ');
+                    }
+                }
+                
+                block.innerHTML = evt.title + deviceInfo + (isAssigned ? '<div class="assigned-badge">✓</div>' : '');
+                block.title = `${evt.title}\n${new Date(evt.startDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})} - ${new Date(evt.endDate).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}\n${evt.interpretType}\n${evt.assignee || '미지정'}${isAssigned ? '\n✓ 기기 배정 완료' : '\n클릭하여 기기 배정'}`;
                 block.onclick = function() { openAssignModal(evt.eventId); };
                 
                 targetSlot.appendChild(block);
@@ -1096,17 +1286,29 @@
             
             selectedEvent = event;
             
+            // 이미 배정된 기기 찾기
+            const assigned = rentals.find(r => r.reason === event.title && r.status === '사용중');
+            
             document.getElementById('assignModalTitle').textContent = `"${event.title}" 기기 배정`;
             document.getElementById('assignModalInfo').innerHTML = `
                 <strong>📅 일정:</strong> ${new Date(event.startDate).toLocaleString('ko-KR')} ~ ${new Date(event.endDate).toLocaleString('ko-KR')}<br>
                 <strong>🎤 유형:</strong> ${event.interpretType}<br>
                 <strong>👤 담당:</strong> ${event.assignee || '미지정'}
+                ${assigned ? '<br><br><strong style="color: #10b981;">✅ 이미 기기가 배정되어 있습니다</strong>' : ''}
             `;
             
-            document.getElementById('modalNewTx').value = '0';
-            document.getElementById('modalNewRx').value = '0';
-            document.getElementById('modalOldTx').value = '0';
-            document.getElementById('modalOldRx').value = '0';
+            // 이미 배정된 값이 있으면 표시, 없으면 0
+            if (assigned) {
+                document.getElementById('modalNewTx').value = assigned.newTransmitter || '0';
+                document.getElementById('modalNewRx').value = assigned.newReceiver || '0';
+                document.getElementById('modalOldTx').value = assigned.oldTransmitter || '0';
+                document.getElementById('modalOldRx').value = assigned.oldReceiver || '0';
+            } else {
+                document.getElementById('modalNewTx').value = '0';
+                document.getElementById('modalNewRx').value = '0';
+                document.getElementById('modalOldTx').value = '0';
+                document.getElementById('modalOldRx').value = '0';
+            }
             
             document.getElementById('assignModal').classList.add('active');
         }
