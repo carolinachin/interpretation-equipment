@@ -313,6 +313,7 @@
                 <div class="header-buttons">
                     <button class="sync-btn" onclick="manualRefresh()" id="refreshBtn">🔄 새로고침</button>
                     <button class="sync-btn" onclick="syncTeamUp()" id="syncBtn">📅 TeamUp 동기화</button>
+                    <button class="sync-btn" onclick="openInventoryModal()" style="background: #f59e0b;">📦 재고관리</button>
                 </div>
             </div>
             
@@ -345,6 +346,9 @@
 
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('teamup')">TeamUp 주간</button>
+            <button class="tab-btn" onclick="showTab('weekly')">재고 주간뷰</button>
+            <button class="tab-btn" onclick="showTab('monthly')">재고 월간뷰</button>
+            <button class="tab-btn" onclick="showTab('rental')">수동 신청</button>
             <button class="tab-btn" onclick="showTab('list')">반출 목록</button>
         </div>
 
@@ -360,6 +364,123 @@
                 <div style="overflow-x: auto;">
                     <div class="weekly-grid" id="teamupWeeklyGrid"></div>
                 </div>
+            </div>
+        </div>
+
+        <div id="weekly" class="content">
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="padding: 20px; border-bottom: 2px solid #e5e7eb;">
+                    <div class="week-nav">
+                        <button onclick="changeStockWeek(-1)">◀ 이전 주</button>
+                        <h2 id="stockWeekTitle" style="margin: 0;">주간 재고 현황</h2>
+                        <button onclick="changeStockWeek(1)">다음 주 ▶</button>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <div class="weekly-grid" id="stockWeeklyGrid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="monthly" class="content">
+            <div class="card">
+                <div class="week-nav">
+                    <button onclick="changeMonth(-1)">◀ 이전 달</button>
+                    <h2 id="monthTitle" style="margin: 0;">월간 재고 현황</h2>
+                    <button onclick="changeMonth(1)">다음 달 ▶</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 20px;" id="calendarGrid"></div>
+            </div>
+        </div>
+
+        <div id="rental" class="content">
+            <div class="card">
+                <h2>직접 반출 신청</h2>
+                <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 10px; padding: 15px; margin-bottom: 20px; font-size: 14px; color: #92400e;">
+                    💡 TeamUp에 없는 일정이거나 긴급한 경우 직접 신청하세요.
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>사용자 *</label>
+                        <select id="userName" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                            <option value="">선택</option>
+                            <option value="규연">규연</option>
+                            <option value="다현">다현</option>
+                            <option value="소담">소담</option>
+                            <option value="성훈">성훈</option>
+                            <option value="승연">승연</option>
+                            <option value="승헌">승헌</option>
+                            <option value="아영">아영</option>
+                            <option value="에리카">에리카</option>
+                            <option value="영아">영아</option>
+                            <option value="우빈">우빈</option>
+                            <option value="은혜">은혜</option>
+                            <option value="주화">주화</option>
+                            <option value="하경">하경</option>
+                            <option value="혜원">혜원</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>유형 *</label>
+                        <select id="rentalType" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                            <option value="현장통역">현장통역</option>
+                            <option value="외근">외근</option>
+                            <option value="출장">출장</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>시작일 *</label>
+                        <input type="date" id="startDate" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                    </div>
+                    <div class="form-group">
+                        <label>종료일 *</label>
+                        <input type="date" id="endDate" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>사유 *</label>
+                    <textarea id="reason" rows="2" placeholder="워크샵, 출장 등" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px;"></textarea>
+                </div>
+
+                <h3 style="margin: 20px 0 15px 0; color: #374151;">사용 기기</h3>
+                <div class="device-selector">
+                    <div class="device-input-group">
+                        <label>✨ 신형 송신기</label>
+                        <select id="manualNewTx">
+                            <option value="0">0대</option>
+                            <option value="1">1대</option>
+                            <option value="2">2대</option>
+                            <option value="3">3대</option>
+                            <option value="4">4대</option>
+                        </select>
+                    </div>
+                    <div class="device-input-group">
+                        <label>✨ 신형 수신기</label>
+                        <select id="manualNewRx"></select>
+                    </div>
+                    <div class="device-input-group">
+                        <label>⚙️ 구형 송신기</label>
+                        <select id="manualOldTx">
+                            <option value="0">0대</option>
+                            <option value="1">1대</option>
+                            <option value="2">2대</option>
+                            <option value="3">3대</option>
+                            <option value="4">4대</option>
+                            <option value="5">5대</option>
+                        </select>
+                    </div>
+                    <div class="device-input-group">
+                        <label>⚙️ 구형 수신기</label>
+                        <select id="manualOldRx"></select>
+                    </div>
+                </div>
+
+                <button class="submit-btn" onclick="submitManualRental()">신청하기</button>
             </div>
         </div>
 
@@ -423,25 +544,39 @@
         let rentals = [];
         let events = [];
         let teamupWeek = new Date();
+        let stockWeek = new Date();
+        let currentMonth = new Date();
         let selectedEvent = null;
 
         // 드롭다운 초기화
         function initDropdowns() {
-            const newRx = document.getElementById('modalNewRx');
-            const oldRx = document.getElementById('modalOldRx');
+            const modalNewRx = document.getElementById('modalNewRx');
+            const modalOldRx = document.getElementById('modalOldRx');
+            const manualNewRx = document.getElementById('manualNewRx');
+            const manualOldRx = document.getElementById('manualOldRx');
             
             for (let i = 0; i <= 28; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                opt.textContent = i + '대';
-                newRx.appendChild(opt);
+                const opt1 = document.createElement('option');
+                opt1.value = i;
+                opt1.textContent = i + '대';
+                modalNewRx.appendChild(opt1);
+                
+                const opt2 = document.createElement('option');
+                opt2.value = i;
+                opt2.textContent = i + '대';
+                manualNewRx.appendChild(opt2);
             }
             
             for (let i = 0; i <= 31; i++) {
-                const opt = document.createElement('option');
-                opt.value = i;
-                opt.textContent = i + '대';
-                oldRx.appendChild(opt);
+                const opt1 = document.createElement('option');
+                opt1.value = i;
+                opt1.textContent = i + '대';
+                modalOldRx.appendChild(opt1);
+                
+                const opt2 = document.createElement('option');
+                opt2.value = i;
+                opt2.textContent = i + '대';
+                manualOldRx.appendChild(opt2);
             }
         }
 
@@ -695,8 +830,16 @@
         }
 
         function openAssignModal(eventId) {
-            const event = events.find(e => e.eventId === eventId);
-            if (!event) return;
+            console.log('openAssignModal 호출:', eventId);
+            console.log('전체 이벤트:', events);
+            
+            const event = events.find(e => e.eventId === eventId || e.eventId == eventId);
+            console.log('찾은 이벤트:', event);
+            
+            if (!event) {
+                alert('이벤트를 찾을 수 없습니다. eventId: ' + eventId);
+                return;
+            }
             
             selectedEvent = event;
             
@@ -722,7 +865,9 @@
                 document.getElementById('modalOldRx').value = '0';
             }
             
-            document.getElementById('assignModal').classList.add('active');
+            const modal = document.getElementById('assignModal');
+            modal.classList.add('active');
+            console.log('모달 활성화:', modal.classList.contains('active'));
         }
 
         function closeAssignModal() {
@@ -807,6 +952,8 @@
         function updateAll() {
             updateInvDisplay();
             updateTeamUpWeekly();
+            updateStockWeekly();
+            updateMonthly();
             updateList();
         }
 
